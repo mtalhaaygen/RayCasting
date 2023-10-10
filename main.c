@@ -23,6 +23,8 @@ t_map	*map_check(char **gv, t_map *map_value)
 {
 	filename_extension(gv[1]);
 	map_reader(map_value); // tüm haritayı okuyup structdaki verileri dolduracak
+	// player bir tane olacak , W- E-N-S den bir tane olacak
+	// haritanın içinde space olabilir, ama tab olamaz, tüm spaceleri 1 yap
 	wall_check(map_value->map); // map duvarlarını kontrol edecek
 }
 
