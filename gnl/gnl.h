@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   gnl.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/17 14:48:41 by maygen            #+#    #+#             */
-/*   Updated: 2023/10/18 12:33:19 by maygen           ###   ########.fr       */
+/*   Created: 2023/10/18 09:51:23 by maygen            #+#    #+#             */
+/*   Updated: 2023/10/18 11:59:02 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GNL_H
+# define GNL_H
 
-char	*ft_strchr(const char *str, int c)
-{
-	int		i;
+# include "../libft/libft.h"
 
-	i = 0;
-	if (!str)
-		return (0);
-	if (c == '\0')
-		return ((char *)&str[ft_strlen(str)]);
-	while (str[i] != '\0')
-	{
-		if (str[i] == (char)c)
-			return ((char *)&str[i]);
-		i++;
-	}
-	return (0);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 6
+# endif
+
+size_t	ft_strlen(const char *s);
+char	*ft_strjoin(char *s1, char *s2);
+char	*liner(char *str);
+char	*next(char *str);
+char	*multiread(char *str, int fd);
+char	*get_next_line(int fd);
+#endif

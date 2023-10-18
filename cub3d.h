@@ -3,13 +3,13 @@
 
 # include "mlx/mlx.h"
 # include "libft/libft.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-
+# include "gnl/gnl.h"
 typedef struct s_map
 {
 	char	**map;
+	char	*map_name;
+	int		map_width;
+	int		map_height;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -17,5 +17,14 @@ typedef struct s_map
 	char	*f_color;
 	char	*c_color;
 }	t_map;
+
+typedef struct s_cub3d
+{
+	int		x;
+	int		y;
+	t_map	map;
+}	t_cub3d;
+
+int	print_err(char *str, char *arg);
 
 #endif

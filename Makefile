@@ -9,8 +9,8 @@ all: $(NAME)
 $(NAME): $(MLX) $(LIB) *.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $(MLX) $(LIB) -o $(NAME) *.o
 
-*.o: *.c
-	$(CC) $(CFLAGS) -c *.c
+*.o: *.c gnl/*.c
+	$(CC) $(CFLAGS) -c *.c gnl/*.c
 
 $(LIB):
 	@make all -C libft/

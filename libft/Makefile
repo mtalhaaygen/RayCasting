@@ -1,6 +1,9 @@
 SRCS			=	ft_strlen.c \
 			ft_strcmp.c \
+			ft_strncmp.c \
 			ft_strchr.c \
+			ft_strdup.c \
+			ft_memcpy.c \
 		
 # BONUS			=	ft_lstnew.c \
 # 		ft_lstadd_front.c \
