@@ -10,3 +10,6 @@
 - NO/SO/WE/EA değerleri aynı olamaz
 - boş bir satırda sadece space tab varsa hata döndürülmeli
 - haritanın çevresi 1 ler ile çevrili olmalı, birbirine bağlı olmayan iki harita olamaz sadece bir harita olacak. Haritanın ulaşılabilir olmayan kısımları olabilir
+
+- player bir tane olacak , W- E-N-S den bir tane olacak
+- haritanın içinde space olabilir, ama tab olamaz, tüm spaceleri 1 yapmak işe yarayabilir

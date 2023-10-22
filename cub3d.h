@@ -10,6 +10,7 @@ typedef struct s_map
 	char	*map_name;
 	int		map_width;
 	int		map_height;
+	int		cub_height;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -18,12 +19,19 @@ typedef struct s_map
 	char	*c_color;
 }	t_map;
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
 typedef struct s_cub3d
 {
-	int		x;
-	int		y;
+	t_point player;
+	t_point ray;
 	t_map	map;
 }	t_cub3d;
+
 
 int	print_err(char *str, char *arg);
 
