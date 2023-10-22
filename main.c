@@ -6,7 +6,7 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/10/22 02:46:30 by maygen           ###   ########.fr       */
+/*   Updated: 2023/10/22 04:54:52 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,46 +37,37 @@ char	*ft_trim(char	*s1)
 	return (s1 + i);
 }
 
-// void	map_reader2(t_map	*map_value, int fd, int i)
-// {
-
-// }
-
 void	map_reader2(t_map	*map_value, int fd, int i)
 {
-	// char	*tmp;
-	// int		j;
-	// // int		map_index;
+	char	*tmp;
+	int		j;
+	int		map_index;
 
-	// j = 0;
-	// // map_index = 0;
-	// tmp = get_next_line(fd);
-	// while (ft_strcmp(tmp, "\n") == 0)
-	// {
-	// 	free(tmp);
-	// 	tmp = get_next_line(fd);
-	// }
-	// // while (i++ < map_value->cub_height)
-	// // {
-			
-	// 	// {
-	// 		// j = 0;
-	// 		// while (tmp[j] && tmp[j] == 32)
-	// 		// 	j++;
-	// 		// if (tmp[j] == '1')
-	// 		// {
-	// 		// 	map_value->map[map_index] = ft_strdup(tmp);
-	// 		// 	map_index++;
-	// 		// 	break ;
-	// 		// }
-	// 		// else
-	// 		// 	print_err("cub invalid line =>", tmp);
-	// 	// }
-	// 	// free(tmp);
-	// // }
-	// // map_reader2(map_value, fd, i);
-	// 				// map_value->map[map_index] = ft_strdup(tmp);
-	// 			// map_index++;
+	tmp = get_next_line(fd);
+	while (ft_strcmp(tmp, "\n") == 0)
+	{
+		free(tmp);
+		tmp = get_next_line(fd);
+		i++;
+	}
+	map_value->map_height = map_value->cub_height - i;
+	map_value->map = malloc(sizeof(char *) * map_value->map_height + 1);
+	j = 0;
+	map_index = -1;
+	while (++map_index < map_value->map_height - 1)
+	{
+		j = 0;
+		while (tmp[j] && tmp[j] == 32)
+			j++;
+		if (tmp[j] == '1')
+		{
+			map_value->map[map_index] = ft_strdup(tmp);
+			free(tmp);
+			tmp = get_next_line(fd);
+		}
+		else if (ft_strcmp(tmp, "\n") != 0)
+			print_err("MAP_READER2 cub invalid line =>", tmp);
+	}
 }
 
 int	floor_read(t_map	*map_value, int fd)
@@ -105,7 +96,7 @@ int	floor_read(t_map	*map_value, int fd)
 			else if (ft_strncmp(tmp, "C", 1) == 0  && !map_value->c_color)
 				map_value->c_color = ft_strdup(ft_trim(tmp + 1));
 			else
-				print_err("cub invalid line =>", tmp);
+				print_err("FLOOR_READER cub invalid line =>", tmp);
 		}
 		free(fre);
 		if (map_value->no && map_value->so && map_value->we && map_value->ea && map_value->c_color && map_value->f_color)
@@ -183,6 +174,18 @@ int	main(int gc, char **gv)
 		printf("ea:*%s\n", map_value->ea);
 		printf("c_color:*%s\n", map_value->c_color);
 		printf("f_color:*%s\n", map_value->f_color);
+		printf("**********************************\n");
+
+		int i = 0;
+		while (i < map_value->map_height)
+		{
+			printf("map[%dd]:%s\n", i, map_value->map[i]);
+			i++;
+		}
+		
+
+		
+		printf("**********************************\n");
 	}
 	else
 		return (print_err("invalid argument count", NULL));
