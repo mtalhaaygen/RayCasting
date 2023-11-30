@@ -15,14 +15,15 @@ typedef struct s_map
 	char	*so;
 	char	*we;
 	char	*ea;
-	char	*f_color;
-	char	*c_color;
+	long	f_color;
+	long	c_color;
 }	t_map;
 
 typedef struct s_point
 {
 	int	x;
 	int	y;
+	int direction;
 }	t_point;
 
 typedef struct s_cub3d
@@ -34,5 +35,6 @@ typedef struct s_cub3d
 
 
 int	print_err(char *str, char *arg);
+void	check_same(t_map	*map_value);
 
 #endif

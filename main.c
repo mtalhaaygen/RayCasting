@@ -6,16 +6,43 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/10/22 04:54:52 by maygen           ###   ########.fr       */
+/*   Updated: 2023/11/30 20:06:08 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	color_assigment(char	*tmp, t_map	*map_value, int	flag)
+{
+	int		i;
+	char	**dbl_arr;
+	int		x[3];
+	long		color;
+
+	dbl_arr = ft_split(tmp + 1, ','); // tmp + 1 yaptım çünkü satırdaki F yada C harfini atlamak için
+	i = -1;
+	while (dbl_arr[++i])
+	{
+		x[i] = ft_atoi(dbl_arr[i]);
+		if (x[i] < 0 || x[i] > 255)
+			print_err("hatalı renk kodu ", NULL);
+		free(dbl_arr[i]);
+	}
+	free(dbl_arr);
+	if (i != 3)
+		print_err("hatalı renk kodu ", NULL);
+	color = (x[0] << 16) + (x[1] << 8) + x[2];
+	// color = (x[0] * 65536) + (x[1] * 256) + x[2];
+	if (flag == 'C')
+		map_value->c_color = color;
+	else if (flag == 'F')
+		map_value->f_color = color;
+}
+
 void	map_null(t_map	*map_value)
 {
-	map_value->c_color = NULL;
-	map_value->f_color = NULL;
+	map_value->c_color = 0;
+	map_value->f_color = 0;
 	map_value->no = NULL;
 	map_value->so = NULL;
 	map_value->we = NULL;
@@ -35,6 +62,20 @@ char	*ft_trim(char	*s1)
 		len--;
 	s1[len + 1] = '\0';
 	return (s1 + i);
+}
+
+void	map_end(int fd)
+{
+	char	*tmp;
+
+	tmp = get_next_line(fd);
+	while (tmp)
+	{
+		if (ft_strcmp(tmp, "\n") != 0)
+			print_err("map_end invalid argument", NULL);
+		free(tmp);
+		tmp = get_next_line(fd);
+	}
 }
 
 void	map_reader2(t_map	*map_value, int fd, int i)
@@ -66,7 +107,9 @@ void	map_reader2(t_map	*map_value, int fd, int i)
 			tmp = get_next_line(fd);
 		}
 		else if (ft_strcmp(tmp, "\n") != 0)
-			print_err("MAP_READER2 cub invalid line =>", tmp);
+			print_err("2 MAP_READER2 cub invalid line =>", tmp);
+		else
+			break;
 	}
 }
 
@@ -92,9 +135,9 @@ int	floor_read(t_map	*map_value, int fd)
 			else if (ft_strncmp(tmp, "EA", 2) == 0  && !map_value->ea)
 				map_value->ea = ft_strdup(ft_strchr(tmp, '.'));
 			else if (ft_strncmp(tmp, "F", 1) == 0  && !map_value->f_color)
-				map_value->f_color = ft_strdup(ft_trim(tmp + 1));
+				color_assigment(tmp, map_value, 'F');
 			else if (ft_strncmp(tmp, "C", 1) == 0  && !map_value->c_color)
-				map_value->c_color = ft_strdup(ft_trim(tmp + 1));
+				color_assigment(tmp, map_value, 'C');
 			else
 				print_err("FLOOR_READER cub invalid line =>", tmp);
 		}
@@ -129,6 +172,7 @@ void	map_reader(t_map	*map_value)
 		print_err("open error", NULL);
 	i = floor_read(map_value, fd);
 	map_reader2(map_value, fd, i);
+	map_end(fd); // haritanın geri kalan kısmında herhangi bir karakter olmamalı
 }
 
 int	print_err(char *str, char *arg)
@@ -157,11 +201,15 @@ t_map	*map_check(char **gv, t_map *map_value)
 	map_value->map_name = ft_strdup(gv[1]);
 	map_null(map_value);
 	map_reader(map_value);
+	check_same(map_value);
+	// check_player(map_value, )
+	// check_wall
 	return (map_value);
 }
 
 int	main(int gc, char **gv)
 {
+	// t_cub3d	*allcub;
 	t_map	*map_value;
 
 	map_value = NULL;
@@ -172,14 +220,14 @@ int	main(int gc, char **gv)
 		printf("so:*%s\n", map_value->so);
 		printf("we:*%s\n", map_value->we);
 		printf("ea:*%s\n", map_value->ea);
-		printf("c_color:*%s\n", map_value->c_color);
-		printf("f_color:*%s\n", map_value->f_color);
+		printf("c_color:*%ld\n", map_value->c_color);
+		printf("f_color:*%ld\n", map_value->f_color);
 		printf("**********************************\n");
 
 		int i = 0;
 		while (i < map_value->map_height)
 		{
-			printf("map[%dd]:%s\n", i, map_value->map[i]);
+			printf("map[%d]:%s\n", i, map_value->map[i]);
 			i++;
 		}
 		
@@ -189,5 +237,5 @@ int	main(int gc, char **gv)
 	}
 	else
 		return (print_err("invalid argument count", NULL));
-	// system("leaks cub3d");
+	system("leaks cub3d");
 }
