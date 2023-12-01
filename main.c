@@ -6,21 +6,20 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/01 19:06:22 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/01 20:36:40 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    open_window(t_map *map)
+void    open_window(t_cub3d *cub)
 {
 	//map = malloc(sizeof(t_map));
-
 	printf("aaaaaaa\n");
-    map->mlx = mlx_init();
+    cub->mlx = mlx_init();
 	printf("sdfghj\n");
-    map->mlx_win = mlx_new_window(map->mlx, 1920, 1080, "a");
-    mlx_loop(map->mlx);
+    cub->mlx_win = mlx_new_window(cub->mlx, 1920, 1080, "a");
+    mlx_loop(cub->mlx);
 }
 
 int	color_assigment(char	*tmp)
@@ -49,14 +48,14 @@ int	color_assigment(char	*tmp)
 	return (color);
 }
 
-void	map_null(t_map	**map_value)
+void	map_null(t_map	*map_value)
 {
-	(*map_value)->c_color = 0;
-	(*map_value)->f_color = 0;
-	(*map_value)->no = NULL;
-	(*map_value)->so = NULL;
-	(*map_value)->we = NULL;
-	(*map_value)->ea = NULL;
+	map_value->c_color = 0;
+	map_value->f_color = 0;
+	map_value->no = NULL;
+	map_value->so = NULL;
+	map_value->we = NULL;
+	map_value->ea = NULL;
 }
 
 char	*ft_trim(char	*s1)
@@ -89,7 +88,7 @@ void	map_end(int fd)
 	close(fd);
 }
 
-void	map_reader2(t_map	**map_value, int fd, int i)
+void	map_reader2(t_map	*map_value, int fd, int i)
 {
 	char	*tmp;
 	int		j;
@@ -102,19 +101,19 @@ void	map_reader2(t_map	**map_value, int fd, int i)
 		tmp = get_next_line(fd);
 		i++;
 	}
-	(*map_value)->map_height = (*map_value)->cub_height - i;
-	(*map_value)->map = malloc(sizeof(char *) * (*map_value)->map_height + 1);
-	(*map_value)->map[(*map_value)->map_height] = NULL;
+	map_value->map_height = map_value->cub_height - i;
+	map_value->map = malloc(sizeof(char *) * map_value->map_height + 1);
+	map_value->map[map_value->map_height] = NULL;
 	j = 0;
 	map_index = -1;
-	while (++map_index < (*map_value)->map_height - 1)
+	while (++map_index < map_value->map_height - 1)
 	{
 		j = 0;
 		while (tmp[j] && tmp[j] == 32)
 			j++;
 		if (tmp[j] == '1')
 		{
-			(*map_value)->map[map_index] = ft_strdup(tmp);
+			map_value->map[map_index] = ft_strdup(tmp);
 			free(tmp);
 			tmp = get_next_line(fd);
 		}
@@ -125,60 +124,66 @@ void	map_reader2(t_map	**map_value, int fd, int i)
 	}
 }
 
-int	floor_read(t_map	**map_value, int fd)
+int	floor_read(t_map	*map_value, int fd)
 {
 	char	*tmp;
 	char	*fre;
 	int		i;
-
+	int		tmp_int;
 	i = -1;
-	while (++i < (*map_value)->cub_height)
+	while (++i < map_value->cub_height)
 	{
 		fre = get_next_line(fd);
 		if (ft_strcmp(fre, "\n") != 0)
 		{
 			tmp = ft_trim(fre);
-			if (ft_strncmp(tmp, "NO", 2) == 0 && !(*map_value)->no)
-				(*map_value)->no = ft_strdup(ft_strchr(tmp, '.'));
-			else if (ft_strncmp(tmp, "SO", 2) == 0 && !(*map_value)->so)
-				(*map_value)->so = ft_strdup(ft_strchr(tmp, '.'));
-			else if (ft_strncmp(tmp, "WE", 2) == 0  && !(*map_value)->we)
-				(*map_value)->we = ft_strdup(ft_strchr(tmp, '.'));
-			else if (ft_strncmp(tmp, "EA", 2) == 0  && !(*map_value)->ea)
-				(*map_value)->ea = ft_strdup(ft_strchr(tmp, '.'));
-			else if (ft_strncmp(tmp, "F", 1) == 0  && !(*map_value)->f_color)
-				(*map_value)->f_color = 14443773;
-			else if (ft_strncmp(tmp, "C", 1) == 0  && !(*map_value)->c_color)
-				(*map_value)->c_color = 14753566;
+			if (!map_value->no && ft_strncmp(tmp, "NO", 2) == 0)
+				map_value->no = ft_strdup(ft_strchr(tmp, '.'));
+			else if (!map_value->so && ft_strncmp(tmp, "SO", 2) == 0)
+				map_value->so = ft_strdup(ft_strchr(tmp, '.'));
+			else if (!map_value->we && ft_strncmp(tmp, "WE", 2) == 0)
+				map_value->we = ft_strdup(ft_strchr(tmp, '.'));
+			else if ( !map_value->ea && ft_strncmp(tmp, "EA", 2) == 0)
+				map_value->ea = ft_strdup(ft_strchr(tmp, '.'));
+			else if (!map_value->f_color && ft_strncmp(tmp, "F", 1) == 0)
+			{
+				tmp_int = color_assigment(tmp);
+				map_value->f_color = tmp_int;
+			}
+			else if (!map_value->c_color && ft_strncmp(tmp, "C", 1) == 0)
+			{
+				tmp_int = color_assigment(tmp);
+				map_value->c_color = tmp_int;
+			}
 			else
 				print_err("FLOOR_READER cub invalid line =>", tmp);
 		}
 		free(fre);
-		if ((*map_value)->no && (*map_value)->so && (*map_value)->we && (*map_value)->ea && (*map_value)->c_color && (*map_value)->f_color)
+		if (map_value->no && map_value->so && map_value->we && map_value->ea && map_value->f_color && map_value->c_color)
 			break ;
 	}
 	return (i);
 }
 
-int	map_reader(t_map	**map_value)
+int	map_reader(t_map	*map_value)
 {
 	char	*tmp;
 	int		fd;
 
 	tmp = ft_strdup("nane");
-	fd = open((*map_value)->map_name, O_RDONLY);
+	fd = open(map_value->map_name, O_RDONLY);
 	if (fd == -1)
 		print_err("open error", NULL);
-	(*map_value)->cub_height = 0;
+	map_value->cub_height = 0;
 	while (tmp)
 	{
 		free(tmp);
 		tmp = get_next_line(fd);
-		(*map_value)->cub_height++;
+		map_value->cub_height++;
 	}
 	free(tmp);
 	close(fd);
-	fd = open((*map_value)->map_name, O_RDONLY);
+	fd = open(map_value->map_name, O_RDONLY);
 	if (fd == -1)
 		print_err("open error", NULL);
 	return (fd);
@@ -193,49 +198,49 @@ int	print_err(char *str, char *arg)
 	exit(1);
 }
 
-int	filename_extension(char *str)
+void	filename_extension(char *str)
 {
 	char	*extension;
 
 	extension = ft_strchr(str, '.');
 	if (ft_strcmp(extension, ".cub"))
 		print_err("file extension not valid", NULL);
-	return (0);
 }
 
-t_map	*map_check(char **gv, t_map *map_value)
+void	map_check(char **gv, t_map *map_value)
 {
 	int i;
 	int	fd;
 
 	filename_extension(gv[1]);
 	map_value->map_name = ft_strdup(gv[1]);
-	map_null(&map_value);
-	fd = map_reader(&map_value);
-	i = floor_read(&map_value, fd);
-	map_reader2(&map_value, fd, i);
+	map_null(map_value);
+	fd = map_reader(map_value);
+	i = floor_read(map_value, fd);
+	map_reader2(map_value, fd, i);
 	map_end(fd); // haritanın geri kalan kısmında herhangi bir karakter olmamalı
 	//check_same(map_value);
 	// check_player(map_value, )
 	// check_wall
-	return (map_value);
 }
 
 int	main(int gc, char **gv)
 {
-	// t_cub3d	*allcub;
-	t_map	*map_value;
+	t_cub3d	*allcub;
 
-	map_value = malloc(sizeof(t_map));
+	allcub = malloc(sizeof(t_cub3d));
+	allcub->map = malloc(sizeof(t_map));
 	if (gc == 2)
 	{
-		map_value = map_check(gv, map_value);
+		map_check(gv, allcub->map);
 		// printf("no:*%s\n", map_value->no);
 		// printf("so:*%s\n", map_value->so);
 		// printf("we:*%s\n", map_value->we);
 		// printf("ea:*%s\n", map_value->ea);
-		printf("c_color:*%d\n", map_value->c_color);
-		printf("f_color:*%d\n", map_value->f_color);
+		printf("c_color:*%d\n", allcub->map->c_color);
+		printf("f_color:*%d\n", allcub->map->f_color);
+		allcub->mlx = NULL;
+		allcub->mlx_win = NULL;
 		// printf("**********************************\n");
 
 		// int i = 0;
@@ -246,7 +251,8 @@ int	main(int gc, char **gv)
 		// }
 		
 		// printf("**********************************\n");
-		open_window(map_value);
+		printf("elma\n");
+		open_window(allcub);
 	}
 	else
 		return (print_err("invalid argument count", NULL));
