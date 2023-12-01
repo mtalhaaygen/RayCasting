@@ -6,6 +6,8 @@
 # include "gnl/gnl.h"
 typedef struct s_map
 {
+	void	*mlx;
+	void	*mlx_win;
 	char	**map;
 	char	*map_name;
 	int		map_width;
@@ -15,8 +17,8 @@ typedef struct s_map
 	char	*so;
 	char	*we;
 	char	*ea;
-	long	f_color;
-	long	c_color;
+	int		f_color;
+	int		c_color;
 }	t_map;
 
 typedef struct s_point
@@ -36,5 +38,6 @@ typedef struct s_cub3d
 
 int	print_err(char *str, char *arg);
 void	check_same(t_map	*map_value);
+void    open_window();
 
 #endif

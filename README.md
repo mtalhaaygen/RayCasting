@@ -8,6 +8,8 @@
 - [x] NO/SO/WE/EA/F/C değerleri her biri bir satırda belirtilmeli ve satırın başında sonunda NO ve ./path arasında boşluklar tablar olabilir
 - [x] F/C değerleri 3er sayıdan oluşmalı ve bu sayılar yalnızca virgül ile ayrılabilir
 - [ ] NO/SO/WE/EA değerleri aynı olamaz
+- [ ] NO/SO/WE/EA değerlerinden iki tane olunca hata vermeli
+- [ ] NO/SO/WE/EA değerlerinden biri eksik olunca hata vermeli
 - [ ] dosyaların uzantısı xpm mi
 - [ ] dosyalar var mı
 
