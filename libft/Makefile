@@ -6,7 +6,8 @@ SRCS			=	ft_strlen.c \
 			ft_memcpy.c \
 			ft_atoi.c \
 			ft_split.c \
-			ft_substr.c
+			ft_substr.c \
+			ft_itoa.c
 		
 # BONUS			=	ft_lstnew.c \
 # 		ft_lstadd_front.c \

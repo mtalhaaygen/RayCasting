@@ -7,9 +7,10 @@
 - [x] NO/SO/WE/EA/F/C değerlerinin sırası kendi araasında değişebilir, belirli bir sırayla gelmek zorunda değil. Ard arda gelmeli daha sonra harita gelecek
 - [x] NO/SO/WE/EA/F/C değerleri her biri bir satırda belirtilmeli ve satırın başında sonunda NO ve ./path arasında boşluklar tablar olabilir
 - [x] F/C değerleri 3er sayıdan oluşmalı ve bu sayılar yalnızca virgül ile ayrılabilir
+- [x] NO/SO/WE/EA değerlerinden iki tane olunca hata vermeli
+- [X] player bir tane olacak , W- E-N-S den bir tane olacak
+- [X] NO/SO/WE/EA değerlerinden biri eksik olunca hata vermeli
 - [ ] NO/SO/WE/EA değerleri aynı olamaz
-- [ ] NO/SO/WE/EA değerlerinden iki tane olunca hata vermeli
-- [ ] NO/SO/WE/EA değerlerinden biri eksik olunca hata vermeli
 - [ ] dosyaların uzantısı xpm mi
 - [ ] dosyalar var mı
 
@@ -23,7 +24,6 @@ Burada karakterin sınırda olması hata olur onuda tek olarak kontorl ettim ÖR
 
 - [x] birbirine bağlı olmayan iki harita olamaz sadece bir harita olacak. Haritanın ulaşılabilir olmayan kısımları olabilir
 
-- [ ] player bir tane olacak , W- E-N-S den bir tane olacak
 - [x] haritanın içinde space olabilir, ama tab olamaz, tüm spaceleri 1 yapmak işe yarayabilir
 
 - [x] COLOR ATAMASI YAPMADAN ÖNCE ATOİ İLE SYAILARI KONTORL ET [0,255] Kapalı aralığında olmak zorunda
