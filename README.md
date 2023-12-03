@@ -10,17 +10,19 @@
 - [x] NO/SO/WE/EA değerlerinden iki tane olunca hata vermeli
 - [X] player bir tane olacak , W- E-N-S den bir tane olacak
 - [X] NO/SO/WE/EA değerlerinden biri eksik olunca hata vermeli
-- [ ] NO/SO/WE/EA değerleri aynı olamaz
-- [ ] dosyaların uzantısı xpm mi
-- [ ] dosyalar var mı
+- [x] NO/SO/WE/EA değerleri aynı olamaz
+- [x] dosyaların uzantısı xpm mi
+- [ ] dosyalar var mı? mlx_xpm_to_img ile kontrol edeceğiz
 
 - [x] boş bir satırda sadece space tab varsa hata döndürülmeli
 
-haritanın çevresi 1 ler ile çevrili olmalı, ' ' karakterinin sağında solunda sadece ' ' ya da 1 olabilir her boşluğu kontorol ettim
+- [x] haritanın çevresi 1 ler ile çevrili olmalı, ' ' karakterinin sağında solunda sadece ' ' ya da 1 olabilir her boşluğu kontorol et
 Burada karakterin sınırda olması hata olur onuda tek olarak kontorl ettim ÖRNEK
 111W1111
 100001111
 111111111
+- [x] ayrıca haritada yabancı bir karakter var mı onuda kontrol et
+- [ ] haritanın satır sonlarındaki \n den sonraki karakterler 1 mi kontrol ettikten sonra haritada tüm satırları aynı genişliğe ulaştırmak için tüm satırların sonuna yeteri kadar space at. Daha sonra check_wall fonksiyonu ile harita kontrolü tamamlanmış oluyor
 
 - [x] birbirine bağlı olmayan iki harita olamaz sadece bir harita olacak. Haritanın ulaşılabilir olmayan kısımları olabilir
 

@@ -6,16 +6,70 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 20:05:21 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:50:38 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/04 02:22:38 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	check_wall_end(t_map	*map_value)
+{
+	(void)map_value;
+	// haritanın satır sonlarındaki \n den sonraki karakterler 1 mi kontrol ettikten sonra haritada tüm satırları aynı genişliğe ulaştırmak için tüm satırların sonuna yeteri kadar space at
+}
+
 void	check_same(t_map	*map_value)
 {
-	printf("check %s", map_value->no);
-	printf("check %s", map_value->so);
-	printf("check %s", map_value->we);
-	printf("check %s", map_value->ea);
+
+	filename_extension(map_value->no + 1, ".xpm"); // +1 ile . karaterini atlıyorum
+	filename_extension(map_value->so + 1, ".xpm");
+	filename_extension(map_value->we + 1, ".xpm");
+	filename_extension(map_value->ea + 1, ".xpm");
+	if (ft_strcmp(map_value->no, map_value->so) == 0)
+		print_err("Error check_same", "North and South texture are SAME");
+	if (ft_strcmp(map_value->no, map_value->ea) == 0)
+		print_err("Error check_same", "North and East texture are SAME");
+	if (ft_strcmp(map_value->no, map_value->we) == 0)
+		print_err("Error check_same", "North and West texture are SAME");
+	if (ft_strcmp(map_value->so, map_value->ea) == 0)
+		print_err("Error check_same", "South and East texture are SAME");
+	if (ft_strcmp(map_value->so, map_value->we) == 0)
+		print_err("Error check_same", "South and West texture are SAME");
+	if (ft_strcmp(map_value->ea, map_value->we) == 0)
+		print_err("Error check_same", "East and West texture are SAME");
+}
+
+void	check_wall(t_map	*map_value)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	check_wall_end(map_value);
+	while (map_value->map[++i])
+	{
+		j = -1;
+		while (map_value->map[i][++j])
+		{
+			if (map_value->map[i][j] == '1' || map_value->map[i][j] == '0' || map_value->map[i][j] == 'N' || map_value->map[i][j] == 'S' || map_value->map[i][j] == 'W' || map_value->map[i][j] == 'E' || map_value->map[i][j] == '\n')
+				continue;
+			else if (map_value->map[i][j] == ' ')
+			{
+				if (i < map_value->map_height - 1 && map_value->map[i + 1][j])
+					if (map_value->map[i + 1][j] != ' ' && map_value->map[i + 1][j] != '1' && map_value->map[i + 1][j] != '\n')
+						print_err("Error check_wall", ft_itoa(i));
+				if (i > 0 && map_value->map[i - 1][j])
+					if (map_value->map[i - 1][j] != ' ' && map_value->map[i - 1][j] != '1' && map_value->map[i - 1][j] != '\n')
+						print_err("1 Error check_wall i", ft_itoa(i));
+				if (map_value->map[i][j + 1])
+					if (map_value->map[i][j + 1] != ' ' && map_value->map[i][j + 1] != '1' && map_value->map[i][j + 1] != '\n')
+						print_err("2 Error check_wall i", ft_itoa(i));
+				if (j > 0 && map_value->map[i][j - 1])
+					if (map_value->map[i][j - 1] != ' ' && map_value->map[i][j - 1] != '1' && map_value->map[i][j - 1] != '\n')
+						print_err("3 Error check_wall i", ft_itoa(i));
+			}
+			else
+				print_err("Error check_wall map have a invalid character ", ft_itoa(map_value->map[i][j]));
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:40:23 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/04 01:56:14 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,21 @@ int	main(int gc, char **gv)
 	{
 		map_fill(gv, allcub->map);
 		player_fill(allcub);
+
+		printf("map_name: %s\n",allcub->map->map_name);
+		printf("map_width: %d\n",allcub->map->map_width);
+		printf("map_height: %d\n",allcub->map->map_height);
+		printf("cub_height: %d\n",allcub->map->cub_height);
+		printf("no: %s\n",allcub->map->no);
+		printf("so: %s\n",allcub->map->so);
+		printf("we: %s\n",allcub->map->we);
+		printf("ea: %s\n",allcub->map->ea);
+		printf("f_color: %d\n",allcub->map->f_color);
+		printf("c_color: %d\n",allcub->map->c_color);
+
+		// int i = -1;
+		// while (allcub->map->map[++i])
+		// 	printf("map: %s\n",allcub->map->map[i]);
 
 		printf("x: %d\n",allcub->player->x);
 		printf("y: %d\n",allcub->player->y);

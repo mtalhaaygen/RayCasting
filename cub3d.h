@@ -4,6 +4,7 @@
 # include "mlx/mlx.h"
 # include "libft/libft.h"
 # include "gnl/gnl.h"
+
 typedef struct s_map
 {
 	char	**map;
@@ -29,10 +30,13 @@ typedef struct s_point
 typedef struct s_cub3d
 {
 	t_point *player;
-	// t_point *ray;
 	t_map	*map;
 	void	*mlx;
 	void	*mlx_win;
+	void	*img_no;
+	void	*img_so;
+	void	*img_we;
+	void	*img_ea;
 }	t_cub3d;
 
 
@@ -47,6 +51,8 @@ void	map_end(int fd);
 void	map_reader2(t_map	*map_value, int fd, int i);
 
 void	check_same(t_map	*map_value);
+void	check_wall(t_map	*map_value);
+
 void    open_window(t_cub3d *cub);
 
 #endif

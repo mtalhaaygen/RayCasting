@@ -6,64 +6,65 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 10:41:29 by maygen            #+#    #+#             */
-/*   Updated: 2023/11/30 17:51:36 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/03 22:04:25 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ft_word_count(char const *s, char c)
+static int	ft_getwordcount(char const *s, char c)
 {
-	size_t	i;
-	size_t	rtn;
+	int	i;
+	int	rt;
 
 	i = 0;
-	rtn = 0;
+	rt = 0;
 	while (s[i])
 	{
-		if (s[i] == c && s[i + 1] != c && s[i + 1] != 0)
-			rtn++;
-		i++;
+		while (s[i] == c)
+			i++;
+		if (s[i] != c && s[i])
+			rt++;
+		while (s[i] != c && s[i])
+			i++;
 	}
-	if (s[0] != c)
-		rtn++;
-	return (rtn);
+	return (rt);
 }
 
-// static char	**protect(void)
-// {
-// 	char	**rtn;
+static char	**ft_splitter(char const *s, char c, char **rt)
+{
+	int	i;
+	int	j;
+	int	templen;
 
-// 	rtn = ft_calloc(1, sizeof(char *));
-// 	rtn[0] = NULL;
-// 	return (rtn);
-// }
+	i = 0;
+	j = -1;
+	while (s[i])
+	{
+		templen = 0;
+		while (s[i] == c)
+			i++;
+		if (s[i] != c && s[i])
+			j++;
+		while (s[i + templen] != c && s[i + templen])
+			templen++;
+		if (templen > 0)
+			rt[j] = ft_substr(s, i, templen);
+		i += templen;
+	}
+	rt[++j] = 0;
+	return (rt);
+}
 
 char	**ft_split(char const *s, char c)
 {
-	char	**rtn;
-	size_t	word_count;
-	size_t	i;
-	size_t	j;
-	size_t	flag;
+	char	**rt;
 
-	i = 0;
-	j = 0;
-	if (!s || s[0] == 0)
-		return (NULL); // return (protect());
-	word_count = ft_word_count(s, c);
-	rtn = malloc(word_count + 1 * sizeof(char *));
-	if (!rtn)
-		return (NULL);
-	while (i < word_count)
-	{
-		while (s[j] == c)
-			j++;
-		flag = j;
-		while (s[j] != c && s[j])
-			j++;
-		rtn[i++] = ft_substr(s, flag, j - flag);
-	}
-	rtn[i] = NULL;
-	return (rtn);
+	if (!s)
+		return (0);
+	rt = (char **)malloc(sizeof(char *) * (ft_getwordcount(s, c) + 1));
+	if (!rt)
+		return (0);
+	rt = ft_splitter(s, c, rt);
+	return (rt);
 }
