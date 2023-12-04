@@ -6,16 +6,46 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 20:05:21 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/04 02:22:38 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/04 10:35:34 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+char	*ft_strnew(int size, char c)
+{
+	char	*str;
+	int		i;
+
+	str = (char *)malloc(sizeof(char) * (size + 1));
+	if (!str)
+		print_err("Error ft_strnew", NULL);
+	i = 0;
+	while (i < size)
+	{
+		str[i] = c;
+		i++;
+	}
+	str[i - 1] = '\n'; // mapin satır sonlarına \n karakteri eklemek için
+	str[i] = 0;
+	return (str);
+}
+
 void	check_wall_end(t_map	*map_value)
 {
-	(void)map_value;
-	// haritanın satır sonlarındaki \n den sonraki karakterler 1 mi kontrol ettikten sonra haritada tüm satırları aynı genişliğe ulaştırmak için tüm satırların sonuna yeteri kadar space at
+	// haritada tüm satırları aynı genişliğe ulaştırmak için tüm satırların sonuna yeteri kadar space at
+	int	i;
+
+	i = -1;
+	while (map_value->map[++i])
+	{
+		if (map_value->map_width > (int)ft_strlen(map_value->map[i]))
+		{
+			if (map_value->map[i][ft_strlen(map_value->map[i]) - 1] == '\n')
+				map_value->map[i][ft_strlen(map_value->map[i]) - 1] = '\0'; // \n karakterini sil
+			map_value->map[i] = ft_strjoin(map_value->map[i], ft_strnew(map_value->map_width - ft_strlen(map_value->map[i]), ' '));
+		}
+	}
 }
 
 void	check_same(t_map	*map_value)

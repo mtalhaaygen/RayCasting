@@ -4,6 +4,8 @@
 # include "mlx/mlx.h"
 # include "libft/libft.h"
 # include "gnl/gnl.h"
+# include "math.h"
+# define PI 3.14159265359
 
 typedef struct s_map
 {
@@ -24,6 +26,13 @@ typedef struct s_point
 {
 	int	x;
 	int	y;
+	double dirx;
+	double diry;
+	double	planeX;
+	double	planeY;
+	double moveSpeed;
+	double rotSpeed;
+	double a;
 	int direction;
 }	t_point;
 
@@ -53,6 +62,8 @@ void	map_reader2(t_map	*map_value, int fd, int i);
 void	check_same(t_map	*map_value);
 void	check_wall(t_map	*map_value);
 
-void    open_window(t_cub3d *cub);
+void	open_window(t_cub3d *cub);
+void	insert_map(t_map *map, t_cub3d *cub);
+int		vectors(t_cub3d *cub);
 
 #endif

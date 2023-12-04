@@ -22,7 +22,7 @@ Burada karakterin sınırda olması hata olur onuda tek olarak kontorl ettim ÖR
 100001111
 111111111
 - [x] ayrıca haritada yabancı bir karakter var mı onuda kontrol et
-- [ ] haritanın satır sonlarındaki \n den sonraki karakterler 1 mi kontrol ettikten sonra haritada tüm satırları aynı genişliğe ulaştırmak için tüm satırların sonuna yeteri kadar space at. Daha sonra check_wall fonksiyonu ile harita kontrolü tamamlanmış oluyor
+- [x] haritanın satır sonlarındaki \n den sonraki karakterler 1 mi kontrol ettikten sonra haritada tüm satırları aynı genişliğe ulaştırmak için tüm satırların sonuna yeteri kadar space at. Daha sonra check_wall fonksiyonu ile harita kontrolü tamamlanmış oluyor
 
 - [x] birbirine bağlı olmayan iki harita olamaz sadece bir harita olacak. Haritanın ulaşılabilir olmayan kısımları olabilir
 

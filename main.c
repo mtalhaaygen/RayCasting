@@ -6,7 +6,7 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/04 01:56:14 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/04 10:46:45 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	player_fill(t_cub3d *cub)
 void	open_window(t_cub3d *cub)
 {
 	cub->mlx = mlx_init();
-	cub->mlx_win = mlx_new_window(cub->mlx, 1920, 1080, "a");
+	cub->mlx_win = mlx_new_window(cub->mlx, 800, 600, "a");
+	insert_map(cub->map, cub);
+	mlx_loop_hook(cub->mlx, &vectors, cub);
 	mlx_loop(cub->mlx);
 }
 
@@ -54,7 +56,7 @@ int	main(int gc, char **gv)
 	{
 		map_fill(gv, allcub->map);
 		player_fill(allcub);
-
+/*
 		printf("map_name: %s\n",allcub->map->map_name);
 		printf("map_width: %d\n",allcub->map->map_width);
 		printf("map_height: %d\n",allcub->map->map_height);
@@ -66,14 +68,14 @@ int	main(int gc, char **gv)
 		printf("f_color: %d\n",allcub->map->f_color);
 		printf("c_color: %d\n",allcub->map->c_color);
 
-		// int i = -1;
-		// while (allcub->map->map[++i])
-		// 	printf("map: %s\n",allcub->map->map[i]);
+		int i = -1;
+		while (allcub->map->map[++i])
+			printf("map: %s",allcub->map->map[i]);
 
 		printf("x: %d\n",allcub->player->x);
 		printf("y: %d\n",allcub->player->y);
 		printf("direction: %c\n",allcub->player->direction);
-
+*/
 		open_window(allcub);
 	}
 	else
