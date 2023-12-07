@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/04 10:46:45 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/07 19:41:37 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	player_fill(t_cub3d *cub)
 		while (cub->map->map[i][++j])
 			if (cub->map->map[i][j] == 'N' || cub->map->map[i][j] == 'W' || cub->map->map[i][j] == 'E' || cub->map->map[i][j] == 'S')
 			{
-				cub->player->x = j;
-				cub->player->y = i;
+				cub->player->x = (double)j;
+				cub->player->y = (double)i;
 				cub->player->direction = cub->map->map[i][j];
 				count++;
 			}
@@ -40,8 +40,8 @@ void	open_window(t_cub3d *cub)
 {
 	cub->mlx = mlx_init();
 	cub->mlx_win = mlx_new_window(cub->mlx, 800, 600, "a");
-	insert_map(cub->map, cub);
-	mlx_loop_hook(cub->mlx, &vectors, cub);
+	draw(cub);
+	mlx_key_hook(cub->mlx_win, &move, cub);
 	mlx_loop(cub->mlx);
 }
 
@@ -52,30 +52,31 @@ int	main(int gc, char **gv)
 	allcub = malloc(sizeof(t_cub3d));
 	allcub->map = malloc(sizeof(t_map));
 	allcub->player = malloc(sizeof(t_point));
+	allcub->txt = malloc(sizeof(t_txt) * 4);
+	allcub->txt[0].width = 64;
+	allcub->txt[1].width = 64;
+	allcub->txt[2].width = 64;
+	allcub->txt[3].width = 64;
+	allcub->txt[0].height = 64;
+	allcub->txt[1].height = 64;
+	allcub->txt[2].height = 64;
+	allcub->txt[3].height = 64;
+	allcub->view = 10.5;
+	//allcub->ray = malloc(sizeof(t_point) * 2);
 	if (gc == 2)
 	{
 		map_fill(gv, allcub->map);
 		player_fill(allcub);
-/*
-		printf("map_name: %s\n",allcub->map->map_name);
-		printf("map_width: %d\n",allcub->map->map_width);
-		printf("map_height: %d\n",allcub->map->map_height);
-		printf("cub_height: %d\n",allcub->map->cub_height);
-		printf("no: %s\n",allcub->map->no);
-		printf("so: %s\n",allcub->map->so);
-		printf("we: %s\n",allcub->map->we);
-		printf("ea: %s\n",allcub->map->ea);
-		printf("f_color: %d\n",allcub->map->f_color);
-		printf("c_color: %d\n",allcub->map->c_color);
 
-		int i = -1;
-		while (allcub->map->map[++i])
-			printf("map: %s",allcub->map->map[i]);
-
-		printf("x: %d\n",allcub->player->x);
-		printf("y: %d\n",allcub->player->y);
+		printf("x: %f\n",allcub->player->x);
+		printf("y: %f\n",allcub->player->y);
 		printf("direction: %c\n",allcub->player->direction);
-*/
+		int i = -1;
+		
+		while(allcub->map->map[++i])
+		{
+			printf("%s\n", allcub->map->map[i]);
+		}
 		open_window(allcub);
 	}
 	else

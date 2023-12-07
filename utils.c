@@ -6,19 +6,11 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:14:33 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/03 22:08:29 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/02 14:18:36 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int ft_isspace(int c)
-{
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v')
-		return 1;
-	else
-		return 0;
-}
 
 int	print_err(char *str, char *arg)
 {
@@ -35,20 +27,20 @@ void	filename_extension(char *str, char *dot)
 
 	extension = ft_strchr(str, '.');
 	if (ft_strcmp(extension, dot))
-		print_err("file extension not valid", dot);
+		print_err("file extension not valid", NULL);
 }
 
-char	*ft_trim(char *str)
+char	*ft_trim(char *s1)
 {
-	char	*end;
+	int	i;
+	int	len;
 
-	while (ft_isspace((unsigned char)*str))
-		str++;
-	if (*str == 0) // all spaces?
-		return str;
-	end = str + ft_strlen(str) - 1;
-	while (end > str && ft_isspace((unsigned char)*end))
-		end--;
-	end[1] = '\0';
-	return (str);
+	i = 0;
+	len = ft_strlen(s1) - 1;
+	while (s1[i] && (s1[i] == 32 || s1[i] == 9)) // vertical tab => 9
+		i++;
+	while (s1[len] && (s1[len] == 32 || s1[len] == 9))
+		len--;
+	s1[len + 1] = '\0';
+	return (s1 + i);
 }
