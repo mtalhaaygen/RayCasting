@@ -6,7 +6,7 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:19:14 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/02 15:43:01 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/04 02:14:48 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,5 @@ void	map_fill(char **gv, t_map *map_value)
 	map_reader2(map_value, fd, i);
 	map_end(fd); // haritanın geri kalan kısmında herhangi bir karakter olmamalı
 	check_same(map_value);
-	// check_player(map_value, )
-	// check_wall
+	check_wall(map_value);
 }
