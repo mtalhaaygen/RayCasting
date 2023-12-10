@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/10 16:58:50 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:25:58 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ void	player_fill(t_cub3d *cub)
 	if (count != 1)
 		print_err("hatalı player sayısı ", ft_itoa(count));
 }
+int		destroy(t_cub3d *cub)
+{
+	//free
+	mlx_destroy_window(cub->mlx, cub->mlx_win);
+	//system("leaks cub3d"); //leak var
+    exit (0);
+}
 
 void	open_window(t_cub3d *cub)
 {
@@ -74,7 +81,9 @@ void	open_window(t_cub3d *cub)
 	cub->mlx_win = mlx_new_window(cub->mlx, 800, 600, "cub3d");
 	cub->img.img = mlx_new_image(cub->mlx, 800, 600);
     cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bpp, &cub->img.sizeline, &cub->img.endian);
-	mlx_key_hook(cub->mlx_win, &move, cub);
+	mlx_hook(cub->mlx_win, 2, 0, keyPress, cub);
+	mlx_hook(cub->mlx_win, 3, 0, keyRelease, cub);
+	mlx_hook(cub->mlx_win, 17, 1L<<2, destroy, cub);
 	mlx_loop_hook(cub->mlx, &vectors, cub);
 	mlx_loop(cub->mlx);
 }

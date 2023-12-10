@@ -18,6 +18,7 @@ typedef struct s_map
 	char	*so;
 	char	*we;
 	char	*ea;
+	int		keys[7];
 	int		f_color;
 	int		c_color;
 }	t_map;
@@ -102,11 +103,18 @@ void	check_same(t_map	*map_value);
 void	check_wall(t_map	*map_value);
 
 int		vectors(t_cub3d *cub);
-float	ft_ray(t_cub3d *cub, float v);
-int		draw(t_cub3d *cub);
-int		move(int key, t_cub3d *cub);
 void	open_window(t_cub3d *cub);
-// void	insert_map(t_map *map, t_cub3d *cub);
-// int		vectors(t_cub3d *cub);
+
+void    go_straight(t_cub3d *cub);
+void    go_left(t_cub3d *cub);
+void    go_back(t_cub3d *cub);
+void    go_right(t_cub3d *cub);
+void    turn_to_left(t_cub3d *cub);
+void    turn_to_right(t_cub3d *cub);
+
+int	    destroy(t_cub3d *cub);
+int		move(t_cub3d *cub);
+int		keyPress(int key, t_cub3d *cub);
+int		keyRelease(int key, t_cub3d *cub);
 
 #endif

@@ -6,113 +6,11 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 14:23:26 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/10 17:43:18 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/10 19:10:36 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void    go_straight(t_cub3d *cub)
-{
-	if (cub->map->map[(int)(cub->player->y)][(int)(cub->player->x +
-			cub->player->dirx * cub->player->moveSpeed)] == '0')
-		cub->player->x += cub->player->dirx * cub->player->moveSpeed;
-	if (cub->map->map
-		[(int)(cub->player->y + cub->player->diry * cub->player->moveSpeed)]
-		[(int)(cub->player->x)] == '0')
-		cub->player->y += cub->player->diry * cub->player->moveSpeed;
-}
-
-void    go_left(t_cub3d *cub)
-{
-    if(cub->map->map[(int)( cub->player->y)][(int)(cub->player->x -
-			cub->player->diry * cub->player->moveSpeed)] == '0')
-        cub->player->x -= cub->player->diry * cub->player->moveSpeed;
-    if(cub->map->map
-		[(int)(cub->player->y - cub->player->dirx * cub->player->moveSpeed)]
-		[(int)(cub->player->x)] == '0')
-        cub->player->y -= cub->player->dirx * cub->player->moveSpeed;
-}
-
-void    go_back(t_cub3d *cub)
-{
-    if(cub->map->map[(int)( cub->player->y)][(int)(cub->player->x -
-			cub->player->dirx * cub->player->moveSpeed)] == '0')
-        cub->player->x -= cub->player->dirx * cub->player->moveSpeed;
-    if(cub->map->map
-		[(int)(cub->player->y - cub->player->diry * cub->player->moveSpeed)]
-		[(int)(cub->player->x)] == '0')
-        cub->player->y -= cub->player->diry * cub->player->moveSpeed;
-}
-void    go_right(t_cub3d *cub)
-{
-    if(cub->map->map[(int)( cub->player->y)][(int)(cub->player->x +
-			cub->player->diry * cub->player->moveSpeed)] == '0')
-        cub->player->x += cub->player->diry * cub->player->moveSpeed;
-    if(cub->map->map
-		[(int)(cub->player->y + cub->player->dirx * cub->player->moveSpeed)]
-		[(int)(cub->player->x)] == '0')
-        cub->player->y += cub->player->dirx * cub->player->moveSpeed;    
-}
-
-void    turn_to_left(t_cub3d *cub)
-{
-    double oldDirX;
-    double oldPlaneX;
-
-    oldDirX = cub->player->dirx;
-    oldPlaneX = cub->player->planeX;
-    cub->player->dirx = cub->player->dirx * cos(-cub->player->rotSpeed) -
-							cub->player->diry * sin(-cub->player->rotSpeed);
-    cub->player->diry = oldDirX * sin(-cub->player->rotSpeed) +
-							cub->player->diry * cos(-cub->player->rotSpeed);
-    cub->player->planeX = cub->player->planeX * cos(-cub->player->rotSpeed) -
-							cub->player->planeY * sin(-cub->player->rotSpeed);
-    cub->player->planeY = oldPlaneX * sin(-cub->player->rotSpeed) +
-							cub->player->planeY * cos(-cub->player->rotSpeed);
-}
-
-void    turn_to_right(t_cub3d *cub)
-{
-    double oldDirX;
-    double oldPlaneX;
-
-    oldDirX = cub->player->dirx;
-    oldPlaneX = cub->player->planeX;
-    cub->player->dirx = cub->player->dirx * cos(cub->player->rotSpeed) -
-							cub->player->diry * sin(cub->player->rotSpeed);
-    cub->player->diry = oldDirX * sin(cub->player->rotSpeed) +
-							cub->player->diry * cos(cub->player->rotSpeed);
-    cub->player->planeX = cub->player->planeX * cos(cub->player->rotSpeed) -
-							cub->player->planeY * sin(cub->player->rotSpeed);
-    cub->player->planeY = oldPlaneX * sin(cub->player->rotSpeed) +
-							cub->player->planeY * cos(cub->player->rotSpeed);
-}
-
-int move(int key, t_cub3d *cub)
-{
-    int width;
-
-    width = 64;
-    if (key == 13) //w
-        go_straight(cub);
-    else if (key == 0)//a
-        go_left(cub);
-    else if (key == 1)//s
-        go_back(cub);
-    else if (key == 2)//d
-        go_right(cub);
-    else if (key == 123) //to the left
-        turn_to_left(cub);
-    else if (key == 124) //to the right
-        turn_to_right(cub);
-    else if (key == 53) //esc, seg veriyor
-    {
-        mlx_destroy_window(cub->mlx, cub->mlx_win);
-        exit (0);
-    }
-    return (0);
-}
 
 void	put_px_img(t_cub3d *f, int x, int y, int color)
 {
@@ -236,6 +134,7 @@ int    vectors(t_cub3d *cub)
     
     x = -1;
     mlx_clear_window(cub->mlx, cub->mlx_win);
+    move(cub);
     while(++x < 800)
     {
         fill_the_values(cub, x);
