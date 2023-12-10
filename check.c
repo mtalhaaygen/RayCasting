@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 20:05:21 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/04 10:35:34 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/10 16:26:04 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	check_wall_end(t_map	*map_value)
 
 void	check_same(t_map	*map_value)
 {
-
 	filename_extension(map_value->no + 1, ".xpm"); // +1 ile . karaterini atlıyorum
 	filename_extension(map_value->so + 1, ".xpm");
 	filename_extension(map_value->we + 1, ".xpm");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:14:33 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/03 22:08:29 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/10 18:09:03 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,16 @@ void	filename_extension(char *str, char *dot)
 	char	*extension;
 
 	extension = ft_strchr(str, '.');
-	if (ft_strcmp(extension, dot))
-		print_err("file extension not valid", dot);
+	if (!ft_strcmp(".cub", dot))
+	{
+		if (ft_strcmp(extension, dot))
+			print_err("file extension not valid", extension);
+	}
+	else if (!ft_strcmp(".xpm", dot))
+	{
+		if (!ft_strcmp(extension, dot))
+			print_err("file extension not valid", extension);
+	}
 }
 
 char	*ft_trim(char *str)

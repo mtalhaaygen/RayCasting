@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:21:19 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/04 10:07:24 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/10 16:26:30 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	map_reader2(t_map	*map_value, int fd, int i)
 		tmp = get_next_line(fd);
 		i++;
 	}
-	
 	map_value->map_width = -1;
 	map_value->map_height = map_value->cub_height - i;
 	map_value->map = malloc(sizeof(char *) * map_value->map_height + 1);

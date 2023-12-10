@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/09 14:43:11 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/10 16:58:50 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ void	fill_player_dir(t_cub3d *cub, double x, double y)
 		cub->player->planeX = 0;
 }
 
+void	decide_which_dir(t_cub3d *cub, int i, int j)
+{
+	if (cub->map->map[i][j] == 'N')
+		fill_player_dir(cub, 0.0, -1.0);
+	else if (cub->map->map[i][j] == 'S')
+		fill_player_dir(cub, 0.0, 1.0);
+	else if (cub->map->map[i][j] == 'W')
+		fill_player_dir(cub, -1.0, 0.0);
+	else if (cub->map->map[i][j] == 'E')
+		fill_player_dir(cub, 1.0, 0.0);
+	
+}
+
 void	player_fill(t_cub3d *cub)
 {
 	int i;
@@ -46,15 +59,7 @@ void	player_fill(t_cub3d *cub)
 			{
 				cub->player->x = (double)j + 0.5;
 				cub->player->y = (double)i + 0.5;
-				if (cub->map->map[i][j] == 'N')
-					fill_player_dir(cub, 0.0, -1.0);
-				else if (cub->map->map[i][j] == 'S')
-					fill_player_dir(cub, 0.0, 1.0);
-				else if (cub->map->map[i][j] == 'W')
-					fill_player_dir(cub, -1.0, 0.0);
-				else if (cub->map->map[i][j] == 'E')
-					fill_player_dir(cub, 1.0, 0.0);
-				//cub->player->direction = cub->map->map[i][j];
+				decide_which_dir(cub, i, j);
 				cub->map->map[i][j] = '0';
 				count++;
 			}
@@ -81,21 +86,28 @@ int	main(int gc, char **gv)
 	allcub = malloc(sizeof(t_cub3d));
 	allcub->map = malloc(sizeof(t_map));
 	allcub->player = malloc(sizeof(t_point));
+	allcub->rays = malloc(sizeof(t_ray));
+	
 	if (gc == 2)
 	{
 		map_fill(gv, allcub->map);
 		player_fill(allcub);
-/*
-		printf("x: %f\n",allcub->player->x);
+
+		/* printf("x: %f\n",allcub->player->x);
 		printf("y: %f\n",allcub->player->y);
 		printf("direction: %c\n",allcub->player->direction);
+		printf("ea: %s\n",allcub->map->ea);
+		printf("no: %s\n",allcub->map->no);
+		printf("so: %s\n",allcub->map->so);
+		printf("we: %s\n",allcub->map->we);
+
 		int i = -1;
 		
 		while(allcub->map->map[++i])
 		{
 			printf("%s\n", allcub->map->map[i]);
-		}
-*/
+		} */
+
 		open_window(allcub);
 	}
 	else

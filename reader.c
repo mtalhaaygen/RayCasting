@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:19:14 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/04 02:14:48 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/10 16:38:11 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,25 @@ int	map_reader(t_map	*map_value)
 	return (fd);
 }
 
+void fill_the_textures(t_map *map_value, char *tmp)
+{
+	if (!map_value->no && ft_strncmp(tmp, "NO", 2) == 0)
+		map_value->no = ft_strdup(ft_strchr(tmp, '.'));
+	else if (!map_value->so && ft_strncmp(tmp, "SO", 2) == 0)
+		map_value->so = ft_strdup(ft_strchr(tmp, '.'));
+	else if (!map_value->we && ft_strncmp(tmp, "WE", 2) == 0)
+		map_value->we = ft_strdup(ft_strchr(tmp, '.'));
+	else if ( !map_value->ea && ft_strncmp(tmp, "EA", 2) == 0)
+		map_value->ea = ft_strdup(ft_strchr(tmp, '.'));
+	else if (!map_value->f_color && ft_strncmp(tmp, "F", 1) == 0)
+		map_value->f_color = color_assigment(tmp);
+	else if (!map_value->c_color && ft_strncmp(tmp, "C", 1) == 0)
+		map_value->c_color = color_assigment(tmp);
+	else
+		print_err("FLOOR_READER cub invalid line =>", tmp);
+	
+}
+
 int	floor_read(t_map	*map_value, int fd)
 {
 	char	*tmp;
@@ -59,20 +78,7 @@ int	floor_read(t_map	*map_value, int fd)
 		if (ft_strcmp(fre, "\n") != 0)
 		{
 			tmp = ft_trim(fre);
-			if (!map_value->no && ft_strncmp(tmp, "NO", 2) == 0)
-				map_value->no = ft_strdup(ft_strchr(tmp, '.'));
-			else if (!map_value->so && ft_strncmp(tmp, "SO", 2) == 0)
-				map_value->so = ft_strdup(ft_strchr(tmp, '.'));
-			else if (!map_value->we && ft_strncmp(tmp, "WE", 2) == 0)
-				map_value->we = ft_strdup(ft_strchr(tmp, '.'));
-			else if ( !map_value->ea && ft_strncmp(tmp, "EA", 2) == 0)
-				map_value->ea = ft_strdup(ft_strchr(tmp, '.'));
-			else if (!map_value->f_color && ft_strncmp(tmp, "F", 1) == 0)
-				map_value->f_color = color_assigment(tmp);
-			else if (!map_value->c_color && ft_strncmp(tmp, "C", 1) == 0)
-				map_value->c_color = color_assigment(tmp);
-			else
-				print_err("FLOOR_READER cub invalid line =>", tmp);
+			fill_the_textures(map_value, tmp);
 		}
 		free(fre);
 		if (map_value->no && map_value->so && map_value->we && map_value->ea && map_value->f_color && map_value->c_color)

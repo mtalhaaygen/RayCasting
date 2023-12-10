@@ -22,11 +22,10 @@ typedef struct s_map
 	int		c_color;
 }	t_map;
 
-
 typedef struct s_point
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 	double dirx;
 	double diry;
 	double	planeX;
@@ -54,11 +53,31 @@ typedef struct s_txt
 
 }t_txt;
 
+typedef struct s_ray
+{
+	int		drawStart;
+    int		drawEnd;
+	int		mapx;
+	int		mapy;
+	int		stepX;
+	int		stepY;
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	double	sideDistX;
+    double	sideDistY;
+    double	deltaDistX;
+    double	deltaDistY;
+    double	perpWallDist;
+
+} t_ray;
+
 typedef struct s_cub3d
 {
 	t_point *player;
 	t_img	img;
 	t_map	*map;
+	t_ray	*rays;
 	t_txt	*txt; //duvarlar için resim eklersek diye
 	void	*mlx;
 	void	*mlx_win;
