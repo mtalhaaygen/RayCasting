@@ -6,23 +6,15 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 14:23:26 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/10 19:10:36 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/11 20:17:31 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	put_px_img(t_cub3d *f, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = f->img.addr + (y * f->img.sizeline + x * (f->img.bpp / 8));
-	*(unsigned int *)dst = color;
-}
-
 void    fill_the_values(t_cub3d *cub, int x)
 {
-    cub->rays->cameraX = ((2 * x) / (double)800) - 1;
+    cub->rays->cameraX = ((2 * x) / (double)WIDTH) - 1;
     cub->rays->rayDirX = cub->player->dirx +
 		cub->player->planeX * cub->rays->cameraX;
     cub->rays->rayDirY = cub->player->diry +
@@ -91,7 +83,7 @@ int    single_ray_until_hit(t_cub3d *cub, int *hit)
     return (side);
 }
 
-void    the_range_of_pixels(t_cub3d *cub, int side)
+int the_range_of_pixels(t_cub3d *cub, int side)
 {
     int lineHeight;
 
@@ -101,58 +93,35 @@ void    the_range_of_pixels(t_cub3d *cub, int side)
     else
 		cub->rays->perpWallDist = (cub->rays->sideDistY
 				- cub->rays->deltaDistY);
-    lineHeight = (int)(600 / cub->rays->perpWallDist);
-    cub->rays->drawStart = -lineHeight / 2 + 600 / 2;
-    cub->rays->drawEnd = lineHeight / 2 + 600 / 2; 
+    lineHeight = (int)(HEIGHT / cub->rays->perpWallDist);
+    cub->rays->drawStart = -lineHeight / 2 + HEIGHT / 2;
+    cub->rays->drawEnd = lineHeight / 2 + HEIGHT / 2; 
     if (cub->rays->drawStart < 0)
         cub->rays->drawStart = 0;
-    if (cub->rays->drawEnd >= 600)
-        cub->rays->drawEnd = 600 - 1;
+    if (cub->rays->drawEnd >= HEIGHT)
+        cub->rays->drawEnd = HEIGHT - 1;
+    return (lineHeight);
 }
 
-void    put_pixels(t_cub3d *cub, int x, int color)
+void    texture_pixel(t_cub3d *cub, int side, int lineHeight)
 {
-    int y;
-
-    y = -1;
-    while (++y < 600)
-    {
-        if (y < cub->rays->drawStart)
-            put_px_img(cub, x, y, cub->map->c_color);
-        else if (y >= cub->rays->drawStart && y <= cub->rays->drawEnd)
-            put_px_img(cub, x, y, color);
-        else
-            put_px_img(cub, x, y, cub->map->f_color);
-    }
-}
-
-int    vectors(t_cub3d *cub)
-{
-    int     x;
-    int     hit; //was there a wall hit?
-    int     side; //was a NS or a EW wall hit?
-    
-    x = -1;
-    mlx_clear_window(cub->mlx, cub->mlx_win);
-    move(cub);
-    while(++x < 800)
-    {
-        fill_the_values(cub, x);
-        hit = 0;
-        fill_sideDist(cub);
-        while (hit == 0)
-            side = single_ray_until_hit(cub, &hit);
-        the_range_of_pixels(cub, side);
-        int color = 0xFFFF00; // duvar rengi olacak.
-        // give x and y sides different brightness
-        if (side == 1) {
-            color = color / 2; // Adjust brightness
-        }
-        put_pixels(cub, x, color);
-        // Draw the pixels of the stripe as a vertical line
-    }
-    mlx_put_image_to_window(cub->mlx, cub->mlx_win, cub->img.img, 0, 0);
-    cub->player->moveSpeed = 0.06;
-    cub->player->rotSpeed = 0.04;
-    return (0);
+    //calculate value of wallX
+    if (side == 0)
+        cub->player->wallX = cub->player->y
+            + cub->rays->perpWallDist * cub->rays->rayDirY;
+    else
+        cub->player->wallX = cub->player->x
+            + cub->rays->perpWallDist * cub->rays->rayDirX;
+    cub->player->wallX -= (int)cub->player->wallX;
+    //x coordinate on the texture
+    cub->player->texX = (int)(cub->player->wallX * (double)(64));
+    if(side == 0 && cub->rays->rayDirX > 0)
+        cub->player->texX = 64 - cub->player->texX - 1;
+    if(side == 1 && cub->rays->rayDirY < 0)
+        cub->player->texX = 64 - cub->player->texX - 1;
+    // How much to increase the texture coordinate per screen pixel
+    cub->player->step = 1.0 * 64 / lineHeight;
+    // Starting texture coordinate
+    cub->player->texPos = (cub->rays->drawStart - HEIGHT / 2 + lineHeight / 2)
+        * cub->player->step;
 }

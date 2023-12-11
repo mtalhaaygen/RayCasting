@@ -6,42 +6,11 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/10 19:25:58 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/11 20:17:57 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	fill_player_dir(t_cub3d *cub, double x, double y)
-{
-	cub->player->dirx = x;
-	cub->player->diry = y;
-	if (x < 0.0)
-		cub->player->planeY = -0.66;
-	else if (x > 0.0)
-		cub->player->planeY = 0.66;
-	else
-		cub->player->planeY = 0;
-	if (y < 0.0)
-		cub->player->planeX = 0.66;
-	else if (y > 0.0)
-		cub->player->planeX = -0.66;
-	else
-		cub->player->planeX = 0;
-}
-
-void	decide_which_dir(t_cub3d *cub, int i, int j)
-{
-	if (cub->map->map[i][j] == 'N')
-		fill_player_dir(cub, 0.0, -1.0);
-	else if (cub->map->map[i][j] == 'S')
-		fill_player_dir(cub, 0.0, 1.0);
-	else if (cub->map->map[i][j] == 'W')
-		fill_player_dir(cub, -1.0, 0.0);
-	else if (cub->map->map[i][j] == 'E')
-		fill_player_dir(cub, 1.0, 0.0);
-	
-}
 
 void	player_fill(t_cub3d *cub)
 {
@@ -55,7 +24,8 @@ void	player_fill(t_cub3d *cub)
 	{
 		j = -1;
 		while (cub->map->map[i][++j])
-			if (cub->map->map[i][j] == 'N' || cub->map->map[i][j] == 'W' || cub->map->map[i][j] == 'E' || cub->map->map[i][j] == 'S')
+			if (cub->map->map[i][j] == 'N' || cub->map->map[i][j] == 'W' ||
+				cub->map->map[i][j] == 'E' || cub->map->map[i][j] == 'S')
 			{
 				cub->player->x = (double)j + 0.5;
 				cub->player->y = (double)i + 0.5;
@@ -67,24 +37,47 @@ void	player_fill(t_cub3d *cub)
 	if (count != 1)
 		print_err("hatalı player sayısı ", ft_itoa(count));
 }
-int		destroy(t_cub3d *cub)
+
+int    ray_casting(t_cub3d *cub)
 {
-	//free
-	mlx_destroy_window(cub->mlx, cub->mlx_win);
-	//system("leaks cub3d"); //leak var
-    exit (0);
+    int     x;
+    int     lineHeight;
+    int     hit; //was there a wall hit?
+    int     side; //was a NS or a EW wall hit?
+    
+    x = -1;
+    mlx_clear_window(cub->mlx, cub->mlx_win);
+    move(cub);
+    while(++x < WIDTH)
+    {
+        fill_the_values(cub, x);
+        hit = 0;
+        fill_sideDist(cub);
+        while (hit == 0)
+            side = single_ray_until_hit(cub, &hit);
+        lineHeight = the_range_of_pixels(cub, side);
+        texture_pixel(cub, side, lineHeight);
+        put_pixels(cub, x, side);
+    }
+    mlx_put_image_to_window(cub->mlx, cub->mlx_win, cub->img.img, 0, 0);
+    cub->player->moveSpeed = 0.06;
+    cub->player->rotSpeed = 0.04;
+    return (0);
 }
 
 void	open_window(t_cub3d *cub)
 {
 	cub->mlx = mlx_init();
-	cub->mlx_win = mlx_new_window(cub->mlx, 800, 600, "cub3d");
-	cub->img.img = mlx_new_image(cub->mlx, 800, 600);
-    cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bpp, &cub->img.sizeline, &cub->img.endian);
+	cub->mlx_win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "cub3d");
+	cub->img.img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
+    cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bpp,
+		&cub->img.sizeline, &cub->img.endian);
+	fill_textures(cub);
+	default_key(cub);
 	mlx_hook(cub->mlx_win, 2, 0, keyPress, cub);
 	mlx_hook(cub->mlx_win, 3, 0, keyRelease, cub);
 	mlx_hook(cub->mlx_win, 17, 1L<<2, destroy, cub);
-	mlx_loop_hook(cub->mlx, &vectors, cub);
+	mlx_loop_hook(cub->mlx, &ray_casting, cub);
 	mlx_loop(cub->mlx);
 }
 
@@ -102,7 +95,7 @@ int	main(int gc, char **gv)
 		map_fill(gv, allcub->map);
 		player_fill(allcub);
 
-		/* printf("x: %f\n",allcub->player->x);
+		/*printf("x: %f\n",allcub->player->x);
 		printf("y: %f\n",allcub->player->y);
 		printf("direction: %c\n",allcub->player->direction);
 		printf("ea: %s\n",allcub->map->ea);

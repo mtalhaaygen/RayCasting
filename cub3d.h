@@ -5,7 +5,8 @@
 # include "libft/libft.h"
 # include "gnl/gnl.h"
 # include "math.h"
-# define PI 3.14159265359
+# define WIDTH 800
+# define HEIGHT 600
 
 typedef struct s_map
 {
@@ -27,14 +28,16 @@ typedef struct s_point
 {
 	double	x;
 	double	y;
-	double dirx;
-	double diry;
+	double	dirx;
+	double	diry;
+	double	wallX; //where exactly the wall was hit
 	double	planeX;
 	double	planeY;
-	double moveSpeed;
-	double rotSpeed;
-	double a;
-	int direction;
+	double	moveSpeed;
+	double	rotSpeed;
+	double	step;
+	double	texPos;
+	int		texX;
 }	t_point;
 
 typedef struct s_img
@@ -44,15 +47,9 @@ typedef struct s_img
 	int		bpp;
 	int		sizeline;
 	int		endian;
+	int		h;
+	int		w;
 } t_img;
-
-typedef struct s_txt
-{
-	unsigned int	height;
-	unsigned int	width;
-	void			*addr;
-
-}t_txt;
 
 typedef struct s_ray
 {
@@ -79,7 +76,7 @@ typedef struct s_cub3d
 	t_img	img;
 	t_map	*map;
 	t_ray	*rays;
-	t_txt	*txt; //duvarlar için resim eklersek diye
+	t_img	txt[4];
 	void	*mlx;
 	void	*mlx_win;
 	void	*img_no;
@@ -102,7 +99,8 @@ void	map_reader2(t_map	*map_value, int fd, int i);
 void	check_same(t_map	*map_value);
 void	check_wall(t_map	*map_value);
 
-int		vectors(t_cub3d *cub);
+void	decide_which_dir(t_cub3d *cub, int i, int j);
+int		ray_casting(t_cub3d *cub);
 void	open_window(t_cub3d *cub);
 
 void    go_straight(t_cub3d *cub);
@@ -111,6 +109,16 @@ void    go_back(t_cub3d *cub);
 void    go_right(t_cub3d *cub);
 void    turn_to_left(t_cub3d *cub);
 void    turn_to_right(t_cub3d *cub);
+
+void    put_pixels(t_cub3d *cub, int x, int side);
+void	fill_textures(t_cub3d *cub);
+void	default_key(t_cub3d *cub);
+
+void    fill_the_values(t_cub3d *cub, int x);
+void    fill_sideDist(t_cub3d *cub);
+int		single_ray_until_hit(t_cub3d *cub, int *hit);
+int		the_range_of_pixels(t_cub3d *cub, int side);
+void    texture_pixel(t_cub3d *cub, int side, int lineHeight);
 
 int	    destroy(t_cub3d *cub);
 int		move(t_cub3d *cub);

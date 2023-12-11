@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 19:02:17 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/10 19:03:11 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:48:27 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void    go_straight(t_cub3d *cub)
 
 void    go_left(t_cub3d *cub)
 {
-    if(cub->map->map[(int)( cub->player->y)][(int)(cub->player->x -
+    if(cub->map->map[(int)(cub->player->y)][(int)(cub->player->x -
 			cub->player->diry * cub->player->moveSpeed)] == '0')
-        cub->player->x -= cub->player->diry * cub->player->moveSpeed;
+        cub->player->x += cub->player->diry * cub->player->moveSpeed;
     if(cub->map->map
 		[(int)(cub->player->y - cub->player->dirx * cub->player->moveSpeed)]
 		[(int)(cub->player->x)] == '0')
@@ -36,7 +36,7 @@ void    go_left(t_cub3d *cub)
 
 void    go_back(t_cub3d *cub)
 {
-    if(cub->map->map[(int)( cub->player->y)][(int)(cub->player->x -
+    if(cub->map->map[(int)(cub->player->y)][(int)(cub->player->x -
 			cub->player->dirx * cub->player->moveSpeed)] == '0')
         cub->player->x -= cub->player->dirx * cub->player->moveSpeed;
     if(cub->map->map
@@ -48,7 +48,7 @@ void    go_right(t_cub3d *cub)
 {
     if(cub->map->map[(int)( cub->player->y)][(int)(cub->player->x +
 			cub->player->diry * cub->player->moveSpeed)] == '0')
-        cub->player->x += cub->player->diry * cub->player->moveSpeed;
+        cub->player->x -= cub->player->diry * cub->player->moveSpeed;
     if(cub->map->map
 		[(int)(cub->player->y + cub->player->dirx * cub->player->moveSpeed)]
 		[(int)(cub->player->x)] == '0')
