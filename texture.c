@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pixels.c                                           :+:      :+:    :+:   */
+/*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:56:23 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/11 20:19:52 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:39:54 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void    put_pixels(t_cub3d *cub, int x, int side)
             texY = (int)cub->player->texPos & (64 - 1);
             cub->player->texPos += cub->player->step;
             if (side == 0 && cub->rays->rayDirX > 0)
-                color = get_color(cub->txt[0], cub->player->texX, texY);
-            else if (side == 0 && cub->rays->rayDirX < 0)
-                color = get_color(cub->txt[1], cub->player->texX, texY);
-            else if (side == 1 && cub->rays->rayDirY > 0)
                 color = get_color(cub->txt[2], cub->player->texX, texY);
-            else if (side == 1 && cub->rays->rayDirY < 0)
+            else if (side == 0 && cub->rays->rayDirX < 0)
                 color = get_color(cub->txt[3], cub->player->texX, texY);
+            else if (side == 1 && cub->rays->rayDirY > 0)
+                color = get_color(cub->txt[0], cub->player->texX, texY);
+            else if (side == 1 && cub->rays->rayDirY < 0)
+                color = get_color(cub->txt[1], cub->player->texX, texY);
             //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
             /* if(side == 1)
                 color = (color >> 1) & 8355711; */
@@ -62,8 +62,21 @@ void    put_pixels(t_cub3d *cub, int x, int side)
     }
 }
 
+void    if_not_img(t_cub3d *cub)
+{
+    if (open(cub->map->no, O_RDONLY) == -1)
+        print_err("Error: ", "path to north image is not valid");
+    else if (open(cub->map->so, O_RDONLY) == -1)
+        print_err("Error: ", "path to south image is not valid");
+    else if (open(cub->map->we, O_RDONLY) == -1)
+        print_err("Error: ", "path to west image is not valid");
+    else if (open(cub->map->ea, O_RDONLY) == -1)
+        print_err("Error: ", "path to east image is not valid");
+}
+
 void    fill_textures(t_cub3d *cub)
 {
+    if_not_img(cub);
 	cub->txt[0].img = mlx_xpm_file_to_image(cub->mlx, cub->map->no,
         &cub->txt[0].w, &cub->txt[0].h);
 	cub->txt[1].img = mlx_xpm_file_to_image(cub->mlx, cub->map->so,

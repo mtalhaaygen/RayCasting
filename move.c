@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 19:01:17 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/11 20:06:28 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:15:38 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int move(t_cub3d *cub)
 {
     if (cub->map->keys[0]) //w
         go_straight(cub);
+    else if (cub->map->keys[2])//s
+        go_back(cub);
     if (cub->map->keys[1])//a
         go_left(cub);
-    if (cub->map->keys[2])//s
-        go_back(cub);
-    if (cub->map->keys[3])//d
+    else if (cub->map->keys[3])//d
         go_right(cub);
     if (cub->map->keys[4]) //to the left
         turn_to_left(cub);

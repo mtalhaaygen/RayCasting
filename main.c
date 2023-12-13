@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/11 20:17:57 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:40:15 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int    ray_casting(t_cub3d *cub)
         put_pixels(cub, x, side);
     }
     mlx_put_image_to_window(cub->mlx, cub->mlx_win, cub->img.img, 0, 0);
-    cub->player->moveSpeed = 0.06;
+    cub->player->moveSpeed = 0.04;
     cub->player->rotSpeed = 0.04;
     return (0);
 }
@@ -115,5 +115,4 @@ int	main(int gc, char **gv)
 	else
 		return (print_err("invalid argument count", NULL));
 	mlx_destroy_image(allcub->mlx, allcub->img.img);
-	//system("leaks cub3d");
 }
