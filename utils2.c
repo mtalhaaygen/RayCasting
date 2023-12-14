@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:15:15 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/13 18:52:58 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/14 20:20:58 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int		destroy(t_cub3d *cub)
 {
 	mlx_destroy_window(cub->mlx, cub->mlx_win);
-	//system("leaks cub3d");
     exit (0);
 }
 

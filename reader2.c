@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:21:19 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/14 18:30:03 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/14 20:15:59 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	map_reader2(t_map	*map_value, int fd, int i)
 		{
 			// burada tmp nin sondan bir önceki karakterinin 1 olup olmadığını kontrol edebiliriz
 			if (tmp[ft_strlen(tmp) - 2] != '1' && tmp[ft_strlen(tmp) - 2] != ' ')
-					print_err("MAP_READER2 cub invalid line =>", tmp);
+				print_err("MAP_READER2 cub invalid line =>", tmp);
 			map_value->map[map_index] = ft_strdup(tmp);
 			if (map_value->map_width < (int)ft_strlen(tmp))
 				map_value->map_width = ft_strlen(tmp);

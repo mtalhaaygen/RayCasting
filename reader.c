@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:19:14 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/14 16:00:17 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/14 20:09:15 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	map_reader(t_map	*map_value)
 	}
 	free(tmp);
 	close(fd);
-	fd = open(map_value->map_name, O_RDONLY);
+	fd = open(map_value->map_name, O_RDONLY);//?
 	if (fd == -1)
 		print_err("open error", NULL);
 	return (fd);
