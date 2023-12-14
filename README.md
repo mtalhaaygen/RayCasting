@@ -12,7 +12,7 @@
 - [X] NO/SO/WE/EA değerlerinden biri eksik olunca hata vermeli
 - [x] NO/SO/WE/EA değerleri aynı olamaz
 - [x] dosyaların uzantısı xpm mi
-- [ ] dosyalar var mı? mlx_xpm_to_img ile kontrol edeceğiz
+- [x] dosyalar var mı? mlx_xpm_to_img ile kontrol edeceğiz
 
 - [x] boş bir satırda sadece space tab varsa hata döndürülmeli
 
@@ -29,4 +29,9 @@ Burada karakterin sınırda olması hata olur onuda tek olarak kontorl ettim ÖR
 - [x] haritanın içinde space olabilir, ama tab olamaz, tüm spaceleri 1 yapmak işe yarayabilir
 
 - [x] COLOR ATAMASI YAPMADAN ÖNCE ATOİ İLE SYAILARI KONTORL ET [0,255] Kapalı aralığında olmak zorunda
-color yapımı x,y,z    int color = (x << 16) | (y << 8) | z;
+color yapımı x,y,z    int color = (x << 16) | (y << 8 ) | z;
+
+- [X] C 0,0,0 yada F 0,0,0 çalışmıyor
+- [X] fill_the_textures fonksiyonunda kabul edeceğimiz girdiler haricinde hata fırlat
+- [x] kenarları 1 ler ile kaplımı kontrol ettik ama ilk satır ve son satır da problem olabiliyor
+- [ ] F 255,f6,0 => err_elem8.cub

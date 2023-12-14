@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:21:19 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/10 16:26:30 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:30:03 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,17 @@ int	color_assigment(char	*tmp)
 	i = 0;
 	while (dbl_arr[i])
 	{
+		// if (is_number(dbl_arr[i]))
+		// 	print_err("Error color code note integer", dbl_arr[i]);
 		x[i] = ft_atoi(dbl_arr[i]);
 		if (x[i] < 0 || x[i] > 255)
-			print_err("hatalı renk kodu ", NULL);
+			print_err("Error color code not RGB", dbl_arr[i]);
 		free(dbl_arr[i]);
 		i++;
 	}
 	free(dbl_arr);
 	if (i != 3)
-		print_err("hatalı renk kodu ", NULL);
+		print_err("Error color code not RGB", NULL);
 	color = (x[0] << 16) + (x[1] << 8) + x[2];
 	color = (x[0] * 65536) + (x[1] * 256) + x[2];
 	return (color);
@@ -92,6 +94,7 @@ void	map_reader2(t_map	*map_value, int fd, int i)
 		else
 		{
 			map_value->map_height = map_index;
+			map_value->map[map_index] = NULL;
 			break;
 		}
 	}

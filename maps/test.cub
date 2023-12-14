@@ -1,9 +1,9 @@
 
 
-EA ./east.xpm
-SO ./south.xpm 
-WE ./west.xpm              
-NO ./north.xpm        
+EA ./pics/colorstone.xpm
+SO ./pics/wood.xpm
+WE ./pics/greystone.xpm
+NO ./pics/purplestone.xpm
 
 F  220,100,253
 C  225,31,30 

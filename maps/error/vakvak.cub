@@ -1,7 +1,7 @@
-NO ./assests/textures/KU.xpm
-SO ./assests/textures/GU.xpm
-EA ./assests/textures/DO.xpm
-WE ./assests/textures/BA.xpm
+NO ./assests/textures/invalid.xpm
+SO ./assests/textures/invalid.xpm
+EA ./assests/textures/invalid.xpm
+WE ./assests/textures/invalid.xpm
 
 F 120,80,10
 C 0,80,160

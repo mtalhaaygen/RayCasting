@@ -1,24 +1,30 @@
-NO ./assests/textures/KU.xpm
-SO ./assests/textures/GU.xpm
-EA ./assests/textures/DO.xpm
-WE ./assests/textures/BA.xpm
+SO ./pics/wood.xpm
+NO ./pics/purplestone.xpm   
 
-F 120,80,10
-C 0,80,160
-
+F 120,80,10             
+WE ./pics/greystone.xpm
+C 0,80,160                  
 
 
 
-      
+
+                EA ./pics/colorstone.xpm
+
+
+
 111111111111111
+10000000000111
+100000000000001
+11110011111111
+    101
+    101
+    101
+    101
+11111011111111
 100000000000001
 100000000000001
+1000000E000001
 100000000000001
-100000000000001
-100000000000001
-100000111000001
-1000001N1000001
-100000111000001
 100000000000001
 100000000000001
 100000000000001

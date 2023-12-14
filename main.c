@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/13 18:40:15 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/14 17:50:12 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	player_fill(t_cub3d *cub)
 			}
 	}
 	if (count != 1)
-		print_err("hatalı player sayısı ", ft_itoa(count));
+		print_err("hatalı player sayısı ", NULL);
 }
 
 int    ray_casting(t_cub3d *cub)
@@ -93,22 +93,25 @@ int	main(int gc, char **gv)
 	if (gc == 2)
 	{
 		map_fill(gv, allcub->map);
-		player_fill(allcub);
 
-		/*printf("x: %f\n",allcub->player->x);
-		printf("y: %f\n",allcub->player->y);
-		printf("direction: %c\n",allcub->player->direction);
-		printf("ea: %s\n",allcub->map->ea);
-		printf("no: %s\n",allcub->map->no);
-		printf("so: %s\n",allcub->map->so);
-		printf("we: %s\n",allcub->map->we);
+		// printf("ea: %s\n",allcub->map->ea);
+		// printf("no: %s\n",allcub->map->no);
+		// printf("so: %s\n",allcub->map->so);
+		// printf("we: %s\n",allcub->map->we);
+		// printf("we: %d\n",allcub->map->f_color);
+		// printf("we: %d\n",allcub->map->c_color);
 
-		int i = -1;
+		// int i = -1;
 		
-		while(allcub->map->map[++i])
-		{
-			printf("%s\n", allcub->map->map[i]);
-		} */
+		// while(allcub->map->map[++i])
+		// {
+		// 	printf("%s\n", allcub->map->map[i]);
+		// }
+		// printf("x: %f\n",allcub->player->x);
+		// printf("y: %f\n",allcub->player->y);
+
+		
+		player_fill(allcub);
 
 		open_window(allcub);
 	}

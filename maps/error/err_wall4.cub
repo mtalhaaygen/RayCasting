@@ -1,8 +1,8 @@
- 
-NO ../assests/textures/NO.xpm
-SO ../assests/textures/SO.xpm
-EA ../assests/textures/EA.xpm
-WE ../assests/textures/WE.xpm
+
+WE ./pics/greystone.xpm
+EA ./pics/greystone4.xpm
+SO ./pics/greystone2.xpm
+NO ./pics/greystone3.xpm
 
 F 255,127,64
 C 0,1,255

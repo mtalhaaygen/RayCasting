@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:19:14 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/13 19:23:53 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:00:17 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	map_null(t_map	*map_value)
 {
-	map_value->c_color = 0;
-	map_value->f_color = 0;
+	map_value->c_color = -1;
+	map_value->f_color = -1;
 	map_value->no = NULL;
 	map_value->so = NULL;
 	map_value->we = NULL;
@@ -36,6 +36,8 @@ int	map_reader(t_map	*map_value)
 	{
 		free(tmp);
 		tmp = get_next_line(fd);
+		if (map_value->cub_height == 0 && tmp == NULL)
+			print_err("Empty map" ,map_value->map_name);
 		map_value->cub_height++;
 	}
 	free(tmp);
@@ -46,23 +48,29 @@ int	map_reader(t_map	*map_value)
 	return (fd);
 }
 
+char	*find_texture(char *tmp)
+{
+	if (!ft_strchr(tmp, '.'))
+		print_err("Invalid texture", tmp);
+	return (ft_strdup(ft_strchr(tmp, '.')));
+}
+
 void fill_the_textures(t_map *map_value, char *tmp)
 {
 	if (!map_value->no && ft_strncmp(tmp, "NO", 2) == 0)
-		map_value->no = ft_strdup(ft_strchr(tmp, '.'));
+		map_value->no = find_texture(tmp);
 	else if (!map_value->so && ft_strncmp(tmp, "SO", 2) == 0)
-		map_value->so = ft_strdup(ft_strchr(tmp, '.'));
+		map_value->so = find_texture(tmp);
 	else if (!map_value->we && ft_strncmp(tmp, "WE", 2) == 0)
-		map_value->we = ft_strdup(ft_strchr(tmp, '.'));
-	else if ( !map_value->ea && ft_strncmp(tmp, "EA", 2) == 0)
-		map_value->ea = ft_strdup(ft_strchr(tmp, '.'));
-	else if (!map_value->f_color && ft_strncmp(tmp, "F", 1) == 0)
+		map_value->we = find_texture(tmp);
+	else if (!map_value->ea && ft_strncmp(tmp, "EA", 2) == 0)
+		map_value->ea = find_texture(tmp);
+	else if (map_value->f_color < 0 && ft_strncmp(tmp, "F", 1) == 0)
 		map_value->f_color = color_assigment(tmp);
-	else if (!map_value->c_color && ft_strncmp(tmp, "C", 1) == 0)
+	else if (map_value->c_color < 0 && ft_strncmp(tmp, "C", 1) == 0)
 		map_value->c_color = color_assigment(tmp);
 	else
 		print_err("FLOOR_READER cub invalid line =>", tmp);
-	
 }
 
 int	floor_read(t_map	*map_value, int fd)
@@ -81,7 +89,7 @@ int	floor_read(t_map	*map_value, int fd)
 			fill_the_textures(map_value, tmp);
 		}
 		free(fre);
-		if (map_value->no && map_value->so && map_value->we && map_value->ea && map_value->f_color && map_value->c_color)
+		if (map_value->no && map_value->so && map_value->we && map_value->ea && map_value->f_color >= 0 && map_value->c_color >= 0)
 			break ;
 	}
 	return (i);
@@ -101,4 +109,5 @@ void	map_fill(char **gv, t_map *map_value)
 	map_end(fd); // haritanın geri kalan kısmında herhangi bir karakter olmamalı
 	check_same(map_value);
 	check_wall(map_value);
+	check_maps_border(map_value);
 }

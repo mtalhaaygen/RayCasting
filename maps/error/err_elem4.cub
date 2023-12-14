@@ -1,10 +1,10 @@
- 
-NO ../assests/textures/NOOO.xpm
-SO ../assests/textures/SOOO.xpm
-EA ../assests/textures/EAAA.xpm
-WE ../assests/textures/WEEE.xpm
 
-F 255,127,64
+EA ./pics/colorstone.xpm
+SO ./pics/wood.xpm
+WE ./pics/greystone.xpm
+NO ./pics/purplestone.xpm
+
+F 255,   12     7, 64
 C 0,1,255
 
 

@@ -7,7 +7,7 @@ NAME = cub3d
 all: $(NAME)
 
 $(NAME): $(MLX) $(LIB) *.o
-	$(CC) $(CFLAGS) $(LDFLAGS) $(MLX) $(LIB) -o $(NAME) *.o
+	$(CC) $(CFLAGS) $(LDFLAGS) $(MLX) $(LIB) -o $(NAME) *.o -g
 
 *.o: *.c gnl/*.c
 	$(CC) $(CFLAGS) -c *.c gnl/*.c

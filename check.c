@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 20:05:21 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/10 16:26:04 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:30:03 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	check_same(t_map	*map_value)
 	filename_extension(map_value->we + 1, ".xpm");
 	filename_extension(map_value->ea + 1, ".xpm");
 	if (ft_strcmp(map_value->no, map_value->so) == 0)
+	{
+		system("leaks cub3d");
 		print_err("Error check_same", "North and South texture are SAME");
+	}
 	if (ft_strcmp(map_value->no, map_value->ea) == 0)
 		print_err("Error check_same", "North and East texture are SAME");
 	if (ft_strcmp(map_value->no, map_value->we) == 0)
@@ -86,19 +89,19 @@ void	check_wall(t_map	*map_value)
 			{
 				if (i < map_value->map_height - 1 && map_value->map[i + 1][j])
 					if (map_value->map[i + 1][j] != ' ' && map_value->map[i + 1][j] != '1' && map_value->map[i + 1][j] != '\n')
-						print_err("Error check_wall", ft_itoa(i));
+						print_err("Error check_wall", NULL);
 				if (i > 0 && map_value->map[i - 1][j])
 					if (map_value->map[i - 1][j] != ' ' && map_value->map[i - 1][j] != '1' && map_value->map[i - 1][j] != '\n')
-						print_err("1 Error check_wall i", ft_itoa(i));
+						print_err("1 Error check_wall i", NULL);
 				if (map_value->map[i][j + 1])
 					if (map_value->map[i][j + 1] != ' ' && map_value->map[i][j + 1] != '1' && map_value->map[i][j + 1] != '\n')
-						print_err("2 Error check_wall i", ft_itoa(i));
+						print_err("2 Error check_wall i", NULL);
 				if (j > 0 && map_value->map[i][j - 1])
 					if (map_value->map[i][j - 1] != ' ' && map_value->map[i][j - 1] != '1' && map_value->map[i][j - 1] != '\n')
-						print_err("3 Error check_wall i", ft_itoa(i));
+						print_err("3 Error check_wall i", NULL);
 			}
 			else
-				print_err("Error check_wall map have a invalid character ", ft_itoa(map_value->map[i][j]));
+				print_err("Error check_wall map have a invalid character ", NULL);
 		}
 	}
 }

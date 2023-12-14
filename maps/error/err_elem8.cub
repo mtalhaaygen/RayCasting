@@ -1,8 +1,8 @@
- 
-NO ../assests/textures/NO.xpm
-SO ../assests/textures/SO.xpm
-EA ../assests/textures/EA.xpm
-WE ../assests/textures/WE.xpm
+
+EA ./pics/colorstone.xpm
+SO ./pics/wood.xpm
+WE ./pics/greystone.xpm
+NO ./pics/purplestone.xpm
 
 F 255,f6,0
 C 0,1,255

@@ -89,36 +89,36 @@ typedef struct s_cub3d
 int		print_err(char *str, char *arg);
 void	filename_extension(char *str, char *dot);
 char	*ft_trim(char *s1);
-
+int		is_number(char *str);
 void	map_fill(char **gv, t_map *map_value);
 
 int		color_assigment(char	*tmp);
 void	map_end(int fd);
 void	map_reader2(t_map	*map_value, int fd, int i);
-
 void	check_same(t_map	*map_value);
+void	check_maps_border(t_map *map_value);
 void	check_wall(t_map	*map_value);
 
 void	decide_which_dir(t_cub3d *cub, int i, int j);
 int		ray_casting(t_cub3d *cub);
 void	open_window(t_cub3d *cub);
 
-void    go_straight(t_cub3d *cub);
-void    go_left(t_cub3d *cub);
-void    go_back(t_cub3d *cub);
-void    go_right(t_cub3d *cub);
-void    turn_to_left(t_cub3d *cub);
-void    turn_to_right(t_cub3d *cub);
+void	go_straight(t_cub3d *cub);
+void	go_left(t_cub3d *cub);
+void	go_back(t_cub3d *cub);
+void	go_right(t_cub3d *cub);
+void	turn_to_left(t_cub3d *cub);
+void	turn_to_right(t_cub3d *cub);
 
-void    put_pixels(t_cub3d *cub, int x, int side);
+void	put_pixels(t_cub3d *cub, int x, int side);
 void	fill_textures(t_cub3d *cub);
 void	default_key(t_cub3d *cub);
 
-void    fill_the_values(t_cub3d *cub, int x);
-void    fill_sideDist(t_cub3d *cub);
+void	fill_the_values(t_cub3d *cub, int x);
+void	fill_sideDist(t_cub3d *cub);
 int		single_ray_until_hit(t_cub3d *cub, int *hit);
 int		the_range_of_pixels(t_cub3d *cub, int side);
-void    texture_pixel(t_cub3d *cub, int side, int lineHeight);
+void	texture_pixel(t_cub3d *cub, int side, int lineHeight);
 
 int	    destroy(t_cub3d *cub);
 int		move(t_cub3d *cub);
