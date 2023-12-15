@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:19:14 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/14 20:09:15 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:30:49 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	map_null(t_map	*map_value)
-{
-	map_value->c_color = -1;
-	map_value->f_color = -1;
-	map_value->no = NULL;
-	map_value->so = NULL;
-	map_value->we = NULL;
-	map_value->ea = NULL;
-}
 
 int	map_reader(t_map	*map_value)
 {
@@ -37,12 +27,12 @@ int	map_reader(t_map	*map_value)
 		free(tmp);
 		tmp = get_next_line(fd);
 		if (map_value->cub_height == 0 && tmp == NULL)
-			print_err("Empty map" ,map_value->map_name);
+			print_err("Empty map", map_value->map_name);
 		map_value->cub_height++;
 	}
 	free(tmp);
 	close(fd);
-	fd = open(map_value->map_name, O_RDONLY);//?
+	fd = open(map_value->map_name, O_RDONLY);
 	if (fd == -1)
 		print_err("open error", NULL);
 	return (fd);
@@ -55,7 +45,7 @@ char	*find_texture(char *tmp)
 	return (ft_strdup(ft_strchr(tmp, '.')));
 }
 
-void fill_the_textures(t_map *map_value, char *tmp)
+void	fill_the_textures(t_map *map_value, char *tmp)
 {
 	if (!map_value->no && ft_strncmp(tmp, "NO", 2) == 0)
 		map_value->no = find_texture(tmp);
@@ -89,7 +79,9 @@ int	floor_read(t_map	*map_value, int fd)
 			fill_the_textures(map_value, tmp);
 		}
 		free(fre);
-		if (map_value->no && map_value->so && map_value->we && map_value->ea && map_value->f_color >= 0 && map_value->c_color >= 0)
+		if (map_value->no && map_value->so && \
+				map_value->we && map_value->ea && \
+					map_value->f_color >= 0 && map_value->c_color >= 0)
 			break ;
 	}
 	return (i);
@@ -97,7 +89,7 @@ int	floor_read(t_map	*map_value, int fd)
 
 void	map_fill(char **gv, t_map *map_value)
 {
-	int i;
+	int	i;
 	int	fd;
 
 	filename_extension(gv[1], ".cub");
@@ -106,7 +98,7 @@ void	map_fill(char **gv, t_map *map_value)
 	fd = map_reader(map_value);
 	i = floor_read(map_value, fd);
 	map_reader2(map_value, fd, i);
-	map_end(fd); // haritanın geri kalan kısmında herhangi bir karakter olmamalı
+	map_end(fd);
 	check_same(map_value);
 	check_wall(map_value);
 	check_maps_border(map_value);

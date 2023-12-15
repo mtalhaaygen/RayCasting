@@ -2,7 +2,7 @@
 SO ../assests/textures/SO.xpm
 EA ../assests/textures/EA.xpm
 WE ../assests/textures/WE.xpm
-NO ../assests/textures/NO.xpm
+NO ./../assests/textures/NO.xpm
 F 255,127,64
 
 C 0,1,255

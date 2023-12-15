@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/15 17:04:26 by maygen            #+#    #+#             */
+/*   Updated: 2023/12/15 17:31:24 by maygen           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -30,14 +42,14 @@ typedef struct s_point
 	double	y;
 	double	dirx;
 	double	diry;
-	double	wallX; //where exactly the wall was hit
-	double	planeX;
-	double	planeY;
-	double	moveSpeed;
-	double	rotSpeed;
+	double	wall_x; //where exactly the wall was hit
+	double	plane_x;
+	double	plane_y;
+	double	move_speed;
+	double	rot_speed;
 	double	step;
-	double	texPos;
-	int		texX;
+	double	tex_pos;
+	int		tex_x;
 }	t_point;
 
 typedef struct s_img
@@ -49,30 +61,30 @@ typedef struct s_img
 	int		endian;
 	int		h;
 	int		w;
-} t_img;
+}	t_img;
 
 typedef struct s_ray
 {
-	int		drawStart;
-    int		drawEnd;
+	int		draw_start;
+	int		draw_end;
 	int		mapx;
 	int		mapy;
-	int		stepX;
-	int		stepY;
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-	double	sideDistX;
-    double	sideDistY;
-    double	deltaDistX;
-    double	deltaDistY;
-    double	perpWallDist;
+	int		step_x;
+	int		step_y;
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
 
-} t_ray;
+}	t_ray;
 
 typedef struct s_cub3d
 {
-	t_point *player;
+	t_point	*player;
 	t_img	img;
 	t_map	*map;
 	t_ray	*rays;
@@ -98,6 +110,7 @@ void	map_reader2(t_map	*map_value, int fd, int i);
 void	check_same(t_map	*map_value);
 void	check_maps_border(t_map *map_value);
 void	check_wall(t_map	*map_value);
+void	map_null(t_map	*map_value);
 
 void	decide_which_dir(t_cub3d *cub, int i, int j);
 int		ray_casting(t_cub3d *cub);
@@ -115,12 +128,12 @@ void	fill_textures(t_cub3d *cub);
 void	default_key(t_cub3d *cub);
 
 void	fill_the_values(t_cub3d *cub, int x);
-void	fill_sideDist(t_cub3d *cub);
+void	fill_side_dist(t_cub3d *cub);
 int		single_ray_until_hit(t_cub3d *cub, int *hit);
 int		the_range_of_pixels(t_cub3d *cub, int side);
 void	texture_pixel(t_cub3d *cub, int side, int lineHeight);
 
-int	    destroy(t_cub3d *cub);
+int		destroy(t_cub3d *cub);
 int		move(t_cub3d *cub);
 int		keyPress(int key, t_cub3d *cub);
 int		keyRelease(int key, t_cub3d *cub);

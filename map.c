@@ -3,125 +3,126 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 14:23:26 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/13 17:34:51 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:28:47 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    fill_the_values(t_cub3d *cub, int x)
+void	fill_the_values(t_cub3d *cub, int x)
 {
-    cub->rays->cameraX = ((2 * x) / (double)WIDTH) - 1;
-    cub->rays->rayDirX = cub->player->dirx +
-		cub->player->planeX * cub->rays->cameraX;
-    cub->rays->rayDirY = cub->player->diry +
-		cub->player->planeY * cub->rays->cameraX;
-    // her turda mapx mapy değerleri player ın konumunu tutuyor
-    cub->rays->mapx = (int)cub->player->x;
-    cub->rays->mapy = (int)cub->player->y;
-    if (cub->rays->rayDirX == 0)
-        cub->rays->deltaDistX = 1e30;
-    else
-        cub->rays->deltaDistX = fabs(1 / cub->rays->rayDirX);
-    if (cub->rays->rayDirY == 0)
-        cub->rays->deltaDistY = 1e30;
-    else
-        cub->rays->deltaDistY = fabs(1 / cub->rays->rayDirY);
+	cub->rays->camera_x = ((2 * x) / (double)WIDTH) - 1;
+	cub->rays->ray_dir_x = cub->player->dirx + \
+		cub->player->plane_x * cub->rays->camera_x;
+	cub->rays->ray_dir_y = cub->player->diry + \
+		cub->player->plane_y * cub->rays->camera_x;
+	// her turda mapx mapy değerleri player ın konumunu tutuyor
+	cub->rays->mapx = (int)cub->player->x;
+	cub->rays->mapy = (int)cub->player->y;
+	if (cub->rays->ray_dir_x == 0)
+		cub->rays->delta_dist_x = 1e30;
+	else
+		cub->rays->delta_dist_x = fabs(1 / cub->rays->ray_dir_x);
+	if (cub->rays->ray_dir_y == 0)
+		cub->rays->delta_dist_y = 1e30;
+	else
+		cub->rays->delta_dist_y = fabs(1 / cub->rays->ray_dir_y);
 }
 
-void    fill_sideDist(t_cub3d *cub)
+void	fill_side_dist(t_cub3d *cub)
 {
-    if (cub->rays->rayDirX < 0)
-    {
-        cub->rays->stepX = -1;
-        cub->rays->sideDistX = (cub->player->x - cub->rays->mapx)
-			* cub->rays->deltaDistX;
-    }
-    else
-    {
-        cub->rays->stepX = 1;
-        cub->rays->sideDistX = (cub->rays->mapx + 1.0 - cub->player->x)
-			* cub->rays->deltaDistX;
-    }
-    if (cub->rays->rayDirY < 0)
-    {
-        cub->rays->stepY = -1;
-        cub->rays->sideDistY = (cub->player->y - cub->rays->mapy)
-			* cub->rays->deltaDistY;
-    }
-    else
-    {
-        cub->rays->stepY = 1;
-        cub->rays->sideDistY = (cub->rays->mapy + 1.0 - cub->player->y)
-			* cub->rays->deltaDistY;
-    }
+	if (cub->rays->ray_dir_x < 0)
+	{
+		cub->rays->step_x = -1;
+		cub->rays->side_dist_x = (cub->player->x - cub->rays->mapx)
+			* cub->rays->delta_dist_x;
+	}
+	else
+	{
+		cub->rays->step_x = 1;
+		cub->rays->side_dist_x = (cub->rays->mapx + 1.0 - cub->player->x)
+			* cub->rays->delta_dist_x;
+	}
+	if (cub->rays->ray_dir_y < 0)
+	{
+		cub->rays->step_y = -1;
+		cub->rays->side_dist_y = (cub->player->y - cub->rays->mapy)
+			* cub->rays->delta_dist_y;
+	}
+	else
+	{
+		cub->rays->step_y = 1;
+		cub->rays->side_dist_y = (cub->rays->mapy + 1.0 - cub->player->y)
+			* cub->rays->delta_dist_y;
+	}
 }
 
-int    single_ray_until_hit(t_cub3d *cub, int *hit)
+int	single_ray_until_hit(t_cub3d *cub, int *hit)
 {
-    int side;
+	int	side;
 
-    //jump to next map square, either in x-direction, or in y-direction
-    if (cub->rays->sideDistX < cub->rays->sideDistY)
-    {
-        cub->rays->sideDistX += cub->rays->deltaDistX;
-        cub->rays->mapx += cub->rays->stepX;
-        side = 0;
-    }
-    else
-    {
-        cub->rays->sideDistY += cub->rays->deltaDistY;
-        cub->rays->mapy += cub->rays->stepY;
-        side = 1;
-    }
-    //Check if ray has hit a wall
-    if (cub->map->map[cub->rays->mapy][cub->rays->mapx] == '1')
-        *hit = 1;
-    return (side);
+	//jump to next map square, either in x-_direction, or in y-_direction
+	if (cub->rays->side_dist_x < cub->rays->side_dist_y)
+	{
+		cub->rays->side_dist_x += cub->rays->delta_dist_x;
+		cub->rays->mapx += cub->rays->step_x;
+		side = 0;
+	}
+	else
+	{
+		cub->rays->side_dist_y += cub->rays->delta_dist_y;
+		cub->rays->mapy += cub->rays->step_y;
+		side = 1;
+	}
+	//Check if ray has hit a wall
+	if (cub->map->map[cub->rays->mapy][cub->rays->mapx] == '1')
+		*hit = 1;
+	return (side);
 }
 
-int the_range_of_pixels(t_cub3d *cub, int side)
+int	the_range_of_pixels(t_cub3d *cub, int side)
 {
-    int lineHeight;
+	int	line_height;
 
-    if  (side == 0)
-		cub->rays->perpWallDist = (cub->rays->sideDistX
-				- cub->rays->deltaDistX);
-    else
-		cub->rays->perpWallDist = (cub->rays->sideDistY
-				- cub->rays->deltaDistY);
-    lineHeight = (int)(HEIGHT / cub->rays->perpWallDist);
-    cub->rays->drawStart = -lineHeight / 2 + HEIGHT / 2;
-    cub->rays->drawEnd = lineHeight / 2 + HEIGHT / 2; 
-    if (cub->rays->drawStart < 0)
-        cub->rays->drawStart = 0;
-    if (cub->rays->drawEnd >= HEIGHT)
-        cub->rays->drawEnd = HEIGHT - 1;
-    return (lineHeight);
+	if (side == 0)
+		cub->rays->perp_wall_dist = (cub->rays->side_dist_x
+				- cub->rays->delta_dist_x);
+	else
+		cub->rays->perp_wall_dist = (cub->rays->side_dist_y
+				- cub->rays->delta_dist_y);
+	line_height = (int)(HEIGHT / cub->rays->perp_wall_dist);
+	cub->rays->draw_start = -line_height / 2 + HEIGHT / 2;
+	cub->rays->draw_end = line_height / 2 + HEIGHT / 2; 
+	if (cub->rays->draw_start < 0)
+		cub->rays->draw_start = 0;
+	if (cub->rays->draw_end >= HEIGHT)
+		cub->rays->draw_end = HEIGHT - 1;
+	return (line_height);
 }
 
-void    texture_pixel(t_cub3d *cub, int side, int lineHeight)
+void	texture_pixel(t_cub3d *cub, int side, int line_height)
 {
-    //calculate value of wallX
-    if (side == 0)
-        cub->player->wallX = cub->player->y
-            + cub->rays->perpWallDist * cub->rays->rayDirY;
-    else
-        cub->player->wallX = cub->player->x
-            + cub->rays->perpWallDist * cub->rays->rayDirX;
-    cub->player->wallX -= (int)cub->player->wallX;
-    //x coordinate on the texture
-    cub->player->texX = (int)(cub->player->wallX * (double)(64));
-    if(side == 0 && cub->rays->rayDirX > 0)
-        cub->player->texX = 64 - cub->player->texX - 1;
-    if(side == 1 && cub->rays->rayDirY < 0)
-        cub->player->texX = 64 - cub->player->texX - 1;
-    // How much to increase the texture coordinate per screen pixel
-    cub->player->step = 1.0 * 64 / lineHeight;
-    // Starting texture coordinate
-    cub->player->texPos = (cub->rays->drawStart - HEIGHT / 2 + lineHeight / 2)
-        * cub->player->step;
+	//calculate value of wall_x
+	if (side == 0)
+		cub->player->wall_x = cub->player->y
+			+ cub->rays->perp_wall_dist * cub->rays->ray_dir_y;
+	else
+		cub->player->wall_x = cub->player->x
+			+ cub->rays->perp_wall_dist * cub->rays->ray_dir_x;
+	cub->player->wall_x -= (int)cub->player->wall_x;
+	//x coor_dinate on the texture
+	cub->player->tex_x = (int)(cub->player->wall_x * (double)(64));
+	if(side == 0 && cub->rays->ray_dir_x > 0)
+		cub->player->tex_x = 64 - cub->player->tex_x - 1;
+	if(side == 1 && cub->rays->ray_dir_y < 0)
+		cub->player->tex_x = 64 - cub->player->tex_x - 1;
+	// How much to increase the texture coor_dinate per screen pixel
+	cub->player->step = 1.0 * 64 / line_height;
+	// Starting texture coor_dinate
+	cub->player->tex_pos = (cub->rays->draw_start \
+		- HEIGHT / 2 + line_height / 2)
+		* cub->player->step;
 }

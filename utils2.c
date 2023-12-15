@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:15:15 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/14 20:20:58 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/15 16:18:31 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		destroy(t_cub3d *cub)
+int	destroy(t_cub3d *cub)
 {
 	mlx_destroy_window(cub->mlx, cub->mlx_win);
-    exit (0);
+	exit(0);
 }
 
 void	fill_player_dir(t_cub3d *cub, double x, double y)
@@ -23,17 +23,17 @@ void	fill_player_dir(t_cub3d *cub, double x, double y)
 	cub->player->dirx = x;
 	cub->player->diry = y;
 	if (x < 0.0)
-		cub->player->planeY = -0.66;
+		cub->player->plane_y = -0.66;
 	else if (x > 0.0)
-		cub->player->planeY = 0.66;
+		cub->player->plane_y = 0.66;
 	else
-		cub->player->planeY = 0;
+		cub->player->plane_y = 0;
 	if (y < 0.0)
-		cub->player->planeX = 0.66;
+		cub->player->plane_x = 0.66;
 	else if (y > 0.0)
-		cub->player->planeX = -0.66;
+		cub->player->plane_x = -0.66;
 	else
-		cub->player->planeX = 0;
+		cub->player->plane_x = 0;
 }
 
 void	decide_which_dir(t_cub3d *cub, int i, int j)

@@ -6,13 +6,13 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:18:00 by maygen            #+#    #+#             */
-/*   Updated: 2023/10/10 18:05:37 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/15 16:01:19 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	if (!s1)
 		return (1);

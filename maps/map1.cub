@@ -2,7 +2,7 @@
 
 
 
-EA ./pics/colorstone.xpm
+EA ../RayCasting/pics/../pics/colorstone.xpm
 WE			./pics/greystone.xpm
 
 C               0,1,255   
