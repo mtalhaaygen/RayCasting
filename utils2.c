@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:15:15 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/15 16:18:31 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/16 10:27:44 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,25 @@ void	decide_which_dir(t_cub3d *cub, int i, int j)
 		fill_player_dir(cub, -1.0, 0.0);
 	else if (cub->map->map[i][j] == 'E')
 		fill_player_dir(cub, 1.0, 0.0);
+}
+
+void	fill_textures(t_cub3d *cub)
+{
+	if_not_img(cub);
+	cub->txt[0].img = mlx_xpm_file_to_image(cub->mlx, cub->map->no, \
+		&cub->txt[0].w, &cub->txt[0].h);
+	cub->txt[1].img = mlx_xpm_file_to_image(cub->mlx, cub->map->so, \
+		&cub->txt[1].w, &cub->txt[1].h);
+	cub->txt[2].img = mlx_xpm_file_to_image(cub->mlx, cub->map->we, \
+		&cub->txt[2].w, &cub->txt[2].h);
+	cub->txt[3].img = mlx_xpm_file_to_image(cub->mlx, cub->map->ea, \
+		&cub->txt[3].w, &cub->txt[3].h);
+	cub->txt[0].addr = mlx_get_data_addr(cub->txt[0].img, &cub->txt[0].bpp, \
+		&cub->txt[0].sizeline, &cub->txt[0].endian);
+	cub->txt[1].addr = mlx_get_data_addr(cub->txt[1].img, &cub->txt[1].bpp, \
+		&cub->txt[1].sizeline, &cub->txt[1].endian);
+	cub->txt[2].addr = mlx_get_data_addr(cub->txt[2].img, &cub->txt[2].bpp, \
+		&cub->txt[2].sizeline, &cub->txt[2].endian);
+	cub->txt[3].addr = mlx_get_data_addr(cub->txt[3].img, &cub->txt[3].bpp, \
+		&cub->txt[3].sizeline, &cub->txt[3].endian);
 }

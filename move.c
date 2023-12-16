@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 19:01:17 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/15 16:26:33 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/16 10:26:54 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,58 +42,57 @@ void	default_key(t_cub3d *cub)
 
 int	move(t_cub3d *cub)
 {
-	if (cub->map->keys[0]) //w
+	if (cub->map->keys[0])
 		go_straight(cub);
-	else if (cub->map->keys[2])//s
+	else if (cub->map->keys[2])
 		go_back(cub);
-	if (cub->map->keys[1])//a
+	if (cub->map->keys[1])
 		go_left(cub);
-	else if (cub->map->keys[3])//d
+	else if (cub->map->keys[3])
 		go_right(cub);
-	if (cub->map->keys[4]) //to the left
+	if (cub->map->keys[4])
 		turn_to_left(cub);
-	if (cub->map->keys[5]) //to the right
+	if (cub->map->keys[5])
 		turn_to_right(cub);
-	if (cub->map->keys[6]) //esc
+	if (cub->map->keys[6])
 		destroy(cub);
 	return (0);
 }
 
-int	keyPress(int key, t_cub3d *cub)
+int	key_press(int key, t_cub3d *cub)
 {
-	if (key == 13) //w
+	if (key == 13)
 		cub->map->keys[0] = 1;
-	else if (key == 0) //a
+	else if (key == 0)
 		cub->map->keys[1] = 1;
-	else if (key == 1) //s
+	else if (key == 1)
 		cub->map->keys[2] = 1;
-	else if (key == 2) //d
+	else if (key == 2)
 		cub->map->keys[3] = 1;
-	else if (key == 123) //to the left
+	else if (key == 123)
 		cub->map->keys[4] = 1;
-	else if (key == 124) //to the right
+	else if (key == 124)
 		cub->map->keys[5] = 1;
-	else if (key == 53) //esc
+	else if (key == 53)
 		cub->map->keys[6] = 1;
 	return (0);
 }
 
-int	keyRelease(int key, t_cub3d *cub)
+int	key_release(int key, t_cub3d *cub)
 {
-	if (key == 13) //w
+	if (key == 13)
 		cub->map->keys[0] = 0;
-	else if (key == 0)//a
+	else if (key == 0)
 		cub->map->keys[1] = 0;
-	else if (key == 1)//s
+	else if (key == 1)
 		cub->map->keys[2] = 0;
-	else if (key == 2)//d
+	else if (key == 2)
 		cub->map->keys[3] = 0;
-	else if (key == 123) //to the left
+	else if (key == 123)
 		cub->map->keys[4] = 0;
-	else if (key == 124) //to the right
+	else if (key == 124)
 		cub->map->keys[5] = 0;
-	else if (key == 53) //esc
+	else if (key == 53)
 		cub->map->keys[6] = 0;
 	return (0);
 }
-

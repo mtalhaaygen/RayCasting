@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:04:26 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/15 17:31:24 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/16 10:28:37 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ typedef struct s_cub3d
 	void	*img_ea;
 }	t_cub3d;
 
-
 int		print_err(char *str, char *arg);
 void	filename_extension(char *str, char *dot);
 char	*ft_trim(char *s1);
@@ -123,6 +122,7 @@ void	go_right(t_cub3d *cub);
 void	turn_to_left(t_cub3d *cub);
 void	turn_to_right(t_cub3d *cub);
 
+void	if_not_img(t_cub3d *cub);
 void	put_pixels(t_cub3d *cub, int x, int side);
 void	fill_textures(t_cub3d *cub);
 void	default_key(t_cub3d *cub);
@@ -135,7 +135,7 @@ void	texture_pixel(t_cub3d *cub, int side, int lineHeight);
 
 int		destroy(t_cub3d *cub);
 int		move(t_cub3d *cub);
-int		keyPress(int key, t_cub3d *cub);
-int		keyRelease(int key, t_cub3d *cub);
+int		key_press(int key, t_cub3d *cub);
+int		key_release(int key, t_cub3d *cub);
 
 #endif

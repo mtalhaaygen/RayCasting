@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/15 17:33:21 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/16 10:27:05 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	ray_casting(t_cub3d *cub)
 {
 	int	x;
 	int	line_height;
-	int	hit; //was there a wall hit?
-	int	side; //was a NS or a EW wall hit?
+	int	hit;
+	int	side;
 
 	x = -1;
 	mlx_clear_window(cub->mlx, cub->mlx_win);
@@ -76,8 +76,8 @@ void	open_window(t_cub3d *cub)
 		&cub->img.sizeline, &cub->img.endian);
 	fill_textures(cub);
 	default_key(cub);
-	mlx_hook(cub->mlx_win, 2, 0, keyPress, cub);
-	mlx_hook(cub->mlx_win, 3, 0, keyRelease, cub);
+	mlx_hook(cub->mlx_win, 2, 0, key_press, cub);
+	mlx_hook(cub->mlx_win, 3, 0, key_release, cub);
 	mlx_hook(cub->mlx_win, 17, 1L << 2, destroy, cub);
 	mlx_loop_hook(cub->mlx, &ray_casting, cub);
 	mlx_loop(cub->mlx);
@@ -91,7 +91,6 @@ int	main(int gc, char **gv)
 	allcub->map = malloc(sizeof(t_map));
 	allcub->player = malloc(sizeof(t_point));
 	allcub->rays = malloc(sizeof(t_ray));
-
 	if (gc == 2)
 	{
 		map_fill(gv, allcub->map);

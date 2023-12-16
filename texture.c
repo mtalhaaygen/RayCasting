@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:56:23 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/15 17:15:07 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/16 10:29:10 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,22 @@ unsigned int	get_color(t_img txt, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
+int	decide_color(t_cub3d *cub, int side, int tex_y)
+{
+	int	color;
+
+	color = 0;
+	if (side == 0 && cub->rays->ray_dir_x > 0)
+		color = get_color(cub->txt[2], cub->player->tex_x, tex_y);
+	else if (side == 0 && cub->rays->ray_dir_x < 0)
+		color = get_color(cub->txt[3], cub->player->tex_x, tex_y);
+	else if (side == 1 && cub->rays->ray_dir_y > 0)
+		color = get_color(cub->txt[0], cub->player->tex_x, tex_y);
+	else if (side == 1 && cub->rays->ray_dir_y < 0)
+		color = get_color(cub->txt[1], cub->player->tex_x, tex_y);
+	return (color);
+}
+
 void	put_pixels(t_cub3d *cub, int x, int side)
 {
 	int	y;
@@ -41,23 +57,9 @@ void	put_pixels(t_cub3d *cub, int x, int side)
 			put_px_img(cub, x, y, cub->map->c_color);
 		else if (y >= cub->rays->draw_start && y <= cub->rays->draw_end)
 		{
-			/*Cast the texture coordinate to integer, 
-			and mask with (texHeight - 1) in case of overflow*/
 			tex_y = (int)cub->player->tex_pos & (64 - 1);
 			cub->player->tex_pos += cub->player->step;
-			if (side == 0 && cub->rays->ray_dir_x > 0)
-				color = get_color(cub->txt[2], cub->player->tex_x, tex_y);
-			else if (side == 0 && cub->rays->ray_dir_x < 0)
-				color = get_color(cub->txt[3], cub->player->tex_x, tex_y);
-			else if (side == 1 && cub->rays->ray_dir_y > 0)
-				color = get_color(cub->txt[0], cub->player->tex_x, tex_y);
-			else if (side == 1 && cub->rays->ray_dir_y < 0)
-				color = get_color(cub->txt[1], cub->player->tex_x, tex_y);
-			/*make color darker for y-sides: 
-			R, G and B byte each divided through
-			two with a "shift" and an "and"
-			 if(side == 1)
-				color = (color >> 1) & 8355711; */
+			color = decide_color(cub, side, tex_y);
 			put_px_img(cub, x, y, color);
 		}
 		else
@@ -75,25 +77,4 @@ void	if_not_img(t_cub3d *cub)
 		print_err("Error: ", "path to west image is not valid");
 	else if (open(cub->map->ea, O_RDONLY) == -1)
 		print_err("Error: ", "path to east image is not valid");
-}
-
-void	fill_textures(t_cub3d *cub)
-{
-	if_not_img(cub);
-	cub->txt[0].img = mlx_xpm_file_to_image(cub->mlx, cub->map->no, \
-		&cub->txt[0].w, &cub->txt[0].h);
-	cub->txt[1].img = mlx_xpm_file_to_image(cub->mlx, cub->map->so, \
-		&cub->txt[1].w, &cub->txt[1].h);
-	cub->txt[2].img = mlx_xpm_file_to_image(cub->mlx, cub->map->we, \
-		&cub->txt[2].w, &cub->txt[2].h);
-	cub->txt[3].img = mlx_xpm_file_to_image(cub->mlx, cub->map->ea, \
-		&cub->txt[3].w, &cub->txt[3].h);
-	cub->txt[0].addr = mlx_get_data_addr(cub->txt[0].img, &cub->txt[0].bpp, \
-		&cub->txt[0].sizeline, &cub->txt[0].endian);
-	cub->txt[1].addr = mlx_get_data_addr(cub->txt[1].img, &cub->txt[1].bpp, \
-		&cub->txt[1].sizeline, &cub->txt[1].endian);
-	cub->txt[2].addr = mlx_get_data_addr(cub->txt[2].img, &cub->txt[2].bpp, \
-		&cub->txt[2].sizeline, &cub->txt[2].endian);
-	cub->txt[3].addr = mlx_get_data_addr(cub->txt[3].img, &cub->txt[3].bpp, \
-		&cub->txt[3].sizeline, &cub->txt[3].endian);
 }
