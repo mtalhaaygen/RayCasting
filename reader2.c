@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:21:19 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/16 11:04:46 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/16 12:03:28 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	map_reader_loop(t_map	*map, int fd, char **tmp, int map_index)
 	else
 	{
 		map->map_height = map_index;
-		map->map[map_index] = NULL;
+		free(*tmp);
 		return (1);
 	}
 	return (0);
@@ -101,6 +101,11 @@ void	map_reader2(t_map	*map, int fd, int i)
 	map->map[map->map_height] = NULL;
 	map_index = -1;
 	while (++map_index < map->map_height - 1)
+	{
 		if (map_reader_loop(map, fd, &tmp, map_index))
+		{
+			map->map[map->map_height] = NULL;
 			break ;
+		}
+	}
 }

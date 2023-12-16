@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:15:15 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/16 11:32:11 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:53:36 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int	destroy(t_cub3d *cub)
 {
 	mlx_destroy_window(cub->mlx, cub->mlx_win);
-	//free(cub->txt);
-	//system("leaks cub3d");
 	exit(0);
 }
 
