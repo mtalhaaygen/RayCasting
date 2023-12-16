@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:04:26 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/16 10:28:37 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:25:45 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_map
 	char	*so;
 	char	*we;
 	char	*ea;
-	int		keys[7];
+	int		*keys;
 	int		f_color;
 	int		c_color;
 }	t_map;
@@ -40,8 +40,8 @@ typedef struct s_point
 {
 	double	x;
 	double	y;
-	double	dirx;
-	double	diry;
+	double	dir_x;
+	double	dir_y;
 	double	wall_x; //where exactly the wall was hit
 	double	plane_x;
 	double	plane_y;
@@ -67,8 +67,8 @@ typedef struct s_ray
 {
 	int		draw_start;
 	int		draw_end;
-	int		mapx;
-	int		mapy;
+	int		map_x;
+	int		map_y;
 	int		step_x;
 	int		step_y;
 	double	camera_x;
@@ -88,7 +88,7 @@ typedef struct s_cub3d
 	t_img	img;
 	t_map	*map;
 	t_ray	*rays;
-	t_img	txt[4];
+	t_img	*txt;
 	void	*mlx;
 	void	*mlx_win;
 	void	*img_no;
@@ -101,15 +101,15 @@ int		print_err(char *str, char *arg);
 void	filename_extension(char *str, char *dot);
 char	*ft_trim(char *s1);
 int		is_number(char *str);
-void	map_fill(char **gv, t_map *map_value);
+void	map_fill(char **gv, t_map *map);
 
 int		color_assigment(char	*tmp);
 void	map_end(int fd);
-void	map_reader2(t_map	*map_value, int fd, int i);
-void	check_same(t_map	*map_value);
-void	check_maps_border(t_map *map_value);
-void	check_wall(t_map	*map_value);
-void	map_null(t_map	*map_value);
+void	map_reader2(t_map	*map, int fd, int i);
+void	check_same(t_map	*map);
+void	check_maps_border(t_map *map);
+void	check_wall(t_map	*map);
+void	map_null(t_map	*map);
 
 void	decide_which_dir(t_cub3d *cub, int i, int j);
 int		ray_casting(t_cub3d *cub);
@@ -131,7 +131,7 @@ void	fill_the_values(t_cub3d *cub, int x);
 void	fill_side_dist(t_cub3d *cub);
 int		single_ray_until_hit(t_cub3d *cub, int *hit);
 int		the_range_of_pixels(t_cub3d *cub, int side);
-void	texture_pixel(t_cub3d *cub, int side, int lineHeight);
+void	texture_pixel(t_cub3d *cub, int side, int line_height);
 
 int		destroy(t_cub3d *cub);
 int		move(t_cub3d *cub);

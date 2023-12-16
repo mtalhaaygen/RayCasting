@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:15:15 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/16 10:27:44 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:32:11 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 int	destroy(t_cub3d *cub)
 {
 	mlx_destroy_window(cub->mlx, cub->mlx_win);
+	//free(cub->txt);
+	//system("leaks cub3d");
 	exit(0);
 }
 
 void	fill_player_dir(t_cub3d *cub, double x, double y)
 {
-	cub->player->dirx = x;
-	cub->player->diry = y;
+	cub->player->dir_x = x;
+	cub->player->dir_y = y;
 	if (x < 0.0)
 		cub->player->plane_y = -0.66;
 	else if (x > 0.0)
@@ -51,6 +53,7 @@ void	decide_which_dir(t_cub3d *cub, int i, int j)
 void	fill_textures(t_cub3d *cub)
 {
 	if_not_img(cub);
+	cub->txt = malloc(sizeof(t_img) * 4);
 	cub->txt[0].img = mlx_xpm_file_to_image(cub->mlx, cub->map->no, \
 		&cub->txt[0].w, &cub->txt[0].h);
 	cub->txt[1].img = mlx_xpm_file_to_image(cub->mlx, cub->map->so, \

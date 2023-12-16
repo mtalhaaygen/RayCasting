@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 14:23:26 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/16 10:25:51 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:13:11 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	fill_the_values(t_cub3d *cub, int x)
 {
 	cub->rays->camera_x = ((2 * x) / (double)WIDTH) - 1;
-	cub->rays->ray_dir_x = cub->player->dirx + \
+	cub->rays->ray_dir_x = cub->player->dir_x + \
 		cub->player->plane_x * cub->rays->camera_x;
-	cub->rays->ray_dir_y = cub->player->diry + \
+	cub->rays->ray_dir_y = cub->player->dir_y + \
 		cub->player->plane_y * cub->rays->camera_x;
-	cub->rays->mapx = (int)cub->player->x;
-	cub->rays->mapy = (int)cub->player->y;
+	cub->rays->map_x = (int)cub->player->x;
+	cub->rays->map_y = (int)cub->player->y;
 	if (cub->rays->ray_dir_x == 0)
 		cub->rays->delta_dist_x = 1e30;
 	else
@@ -36,25 +36,25 @@ void	fill_side_dist(t_cub3d *cub)
 	if (cub->rays->ray_dir_x < 0)
 	{
 		cub->rays->step_x = -1;
-		cub->rays->side_dist_x = (cub->player->x - cub->rays->mapx)
+		cub->rays->side_dist_x = (cub->player->x - cub->rays->map_x)
 			* cub->rays->delta_dist_x;
 	}
 	else
 	{
 		cub->rays->step_x = 1;
-		cub->rays->side_dist_x = (cub->rays->mapx + 1.0 - cub->player->x)
+		cub->rays->side_dist_x = (cub->rays->map_x + 1.0 - cub->player->x)
 			* cub->rays->delta_dist_x;
 	}
 	if (cub->rays->ray_dir_y < 0)
 	{
 		cub->rays->step_y = -1;
-		cub->rays->side_dist_y = (cub->player->y - cub->rays->mapy)
+		cub->rays->side_dist_y = (cub->player->y - cub->rays->map_y)
 			* cub->rays->delta_dist_y;
 	}
 	else
 	{
 		cub->rays->step_y = 1;
-		cub->rays->side_dist_y = (cub->rays->mapy + 1.0 - cub->player->y)
+		cub->rays->side_dist_y = (cub->rays->map_y + 1.0 - cub->player->y)
 			* cub->rays->delta_dist_y;
 	}
 }
@@ -66,16 +66,16 @@ int	single_ray_until_hit(t_cub3d *cub, int *hit)
 	if (cub->rays->side_dist_x < cub->rays->side_dist_y)
 	{
 		cub->rays->side_dist_x += cub->rays->delta_dist_x;
-		cub->rays->mapx += cub->rays->step_x;
+		cub->rays->map_x += cub->rays->step_x;
 		side = 0;
 	}
 	else
 	{
 		cub->rays->side_dist_y += cub->rays->delta_dist_y;
-		cub->rays->mapy += cub->rays->step_y;
+		cub->rays->map_y += cub->rays->step_y;
 		side = 1;
 	}
-	if (cub->map->map[cub->rays->mapy][cub->rays->mapx] == '1')
+	if (cub->map->map[cub->rays->map_y][cub->rays->map_x] == '1')
 		*hit = 1;
 	return (side);
 }

@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 19:01:17 by msaritas          #+#    #+#             */
-/*   Updated: 2023/12/16 10:26:54 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:25:37 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	turn_to_right(t_cub3d *cub)
 	double	old_dir_x;
 	double	old_plane_x;
 
-	old_dir_x = cub->player->dirx;
+	old_dir_x = cub->player->dir_x;
 	old_plane_x = cub->player->plane_x;
-	cub->player->dirx = cub->player->dirx * cos(cub->player->rot_speed) - \
-							cub->player->diry * sin(cub->player->rot_speed);
-	cub->player->diry = old_dir_x * sin(cub->player->rot_speed) + \
-							cub->player->diry * cos(cub->player->rot_speed);
+	cub->player->dir_x = cub->player->dir_x * cos(cub->player->rot_speed) - \
+							cub->player->dir_y * sin(cub->player->rot_speed);
+	cub->player->dir_y = old_dir_x * sin(cub->player->rot_speed) + \
+							cub->player->dir_y * cos(cub->player->rot_speed);
 	cub->player->plane_x = cub->player->plane_x * cos(cub->player->rot_speed) - \
 							cub->player->plane_y * sin(cub->player->rot_speed);
 	cub->player->plane_y = old_plane_x * sin(cub->player->rot_speed) + \
@@ -31,6 +31,7 @@ void	turn_to_right(t_cub3d *cub)
 
 void	default_key(t_cub3d *cub)
 {
+	cub->map->keys = malloc(sizeof(int) * 7);
 	cub->map->keys[0] = 0;
 	cub->map->keys[1] = 0;
 	cub->map->keys[2] = 0;

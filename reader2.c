@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:21:19 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/16 10:18:28 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:04:46 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 int	color_assigment(char	*tmp)
 {
 	int		i;
-	char	**dbl_arr;
+	char	**color_code;
 	int		x[3];
 	int		color;
 
-	dbl_arr = ft_split(tmp + 1, ',');
+	color_code = ft_split(tmp + 1, ',');
 	i = 0;
-	while (dbl_arr[i])
+	while (color_code[i])
 	{
-		if (is_number(dbl_arr[i]))
-			print_err("Error color code invalid", dbl_arr[i]);
-		x[i] = ft_atoi(dbl_arr[i]);
+		if (is_number(color_code[i]))
+			print_err("Error color code invalid", color_code[i]);
+		x[i] = ft_atoi(color_code[i]);
 		if (x[i] < 0 || x[i] > 255)
-			print_err("Error color code not RGB", dbl_arr[i]);
-		free(dbl_arr[i]);
+			print_err("Error color code not RGB", color_code[i]);
+		free(color_code[i]);
 		i++;
 	}
-	free(dbl_arr);
+	free(color_code);
 	if (i != 3)
 		print_err("Error color code not RGB", NULL);
 	color = (x[0] << 16) + (x[1] << 8) + x[2];
@@ -54,7 +54,7 @@ void	map_end(int fd)
 	close(fd);
 }
 
-int	map_reader_loop(t_map	*map_value, int fd, char **tmp, int map_index)
+int	map_reader_loop(t_map	*map, int fd, char **tmp, int map_index)
 {
 	int	j;
 
@@ -66,9 +66,9 @@ int	map_reader_loop(t_map	*map_value, int fd, char **tmp, int map_index)
 		if ((*tmp)[ft_strlen((*tmp)) - 2] != '1' &&
 			(*tmp)[ft_strlen((*tmp)) - 2] != ' ')
 			print_err("MAP_READER2 cub invalid line =>", (*tmp));
-		map_value->map[map_index] = ft_strdup((*tmp));
-		if (map_value->map_width < (int)ft_strlen((*tmp)))
-			map_value->map_width = ft_strlen((*tmp));
+		map->map[map_index] = ft_strdup((*tmp));
+		if (map->map_width < (int)ft_strlen((*tmp)))
+			map->map_width = ft_strlen((*tmp));
 		free((*tmp));
 		(*tmp) = get_next_line(fd);
 	}
@@ -76,14 +76,14 @@ int	map_reader_loop(t_map	*map_value, int fd, char **tmp, int map_index)
 		print_err("2 MAP_READER2 cub invalid line =>", (*tmp));
 	else
 	{
-		map_value->map_height = map_index;
-		map_value->map[map_index] = NULL;
+		map->map_height = map_index;
+		map->map[map_index] = NULL;
 		return (1);
 	}
 	return (0);
 }
 
-void	map_reader2(t_map	*map_value, int fd, int i)
+void	map_reader2(t_map	*map, int fd, int i)
 {
 	char	*tmp;
 	int		map_index;
@@ -95,12 +95,12 @@ void	map_reader2(t_map	*map_value, int fd, int i)
 		tmp = get_next_line(fd);
 		i++;
 	}
-	map_value->map_width = -1;
-	map_value->map_height = map_value->cub_height - i;
-	map_value->map = malloc(sizeof(char *) * map_value->map_height + 1);
-	map_value->map[map_value->map_height] = NULL;
+	map->map_width = -1;
+	map->map_height = map->cub_height - i;
+	map->map = malloc(sizeof(char *) * map->map_height + 1);
+	map->map[map->map_height] = NULL;
 	map_index = -1;
-	while (++map_index < map_value->map_height - 1)
-		if (map_reader_loop(map_value, fd, &tmp, map_index))
+	while (++map_index < map->map_height - 1)
+		if (map_reader_loop(map, fd, &tmp, map_index))
 			break ;
 }

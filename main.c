@@ -6,7 +6,7 @@
 /*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 08:22:35 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/16 10:27:05 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:07:43 by msaritas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	player_fill(t_cub3d *cub)
 		}
 	}
 	if (count != 1)
-		print_err("hatalı player sayısı ", NULL);
+		print_err("number of player ", NULL);
 }
 
 int	ray_casting(t_cub3d *cub)

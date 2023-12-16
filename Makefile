@@ -1,3 +1,4 @@
+SRCS = check.c check2.c main.c map.c move.c move2.c reader.c reader2.c texture.c utils.c utils2.c
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
@@ -10,7 +11,7 @@ $(NAME): $(MLX) $(LIB) *.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $(MLX) $(LIB) -o $(NAME) *.o -g
 
 *.o: *.c gnl/*.c
-	$(CC) $(CFLAGS) -c *.c gnl/*.c
+	$(CC) $(CFLAGS) -c $(SRCS) gnl/*.c
 
 $(LIB):
 	@make all -C libft/
