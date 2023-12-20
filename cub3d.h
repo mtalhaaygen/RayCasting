@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 17:04:26 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/16 11:25:45 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/20 20:18:57 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	check_same(t_map	*map);
 void	check_maps_border(t_map *map);
 void	check_wall(t_map	*map);
 void	map_null(t_map	*map);
+int		comma_count(char *tmp, int comma);
 
 void	decide_which_dir(t_cub3d *cub, int i, int j);
 int		ray_casting(t_cub3d *cub);

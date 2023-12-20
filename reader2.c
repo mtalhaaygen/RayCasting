@@ -6,7 +6,7 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:21:19 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/16 12:03:28 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/20 20:14:57 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	color_assigment(char	*tmp)
 	int		x[3];
 	int		color;
 
+	if (comma_count(tmp, ',') != 2)
+		print_err("Invalid comma count", tmp);
 	color_code = ft_split(tmp + 1, ',');
 	i = 0;
 	while (color_code[i])
@@ -97,7 +99,7 @@ void	map_reader2(t_map	*map, int fd, int i)
 	}
 	map->map_width = -1;
 	map->map_height = map->cub_height - i;
-	map->map = malloc(sizeof(char *) * map->map_height + 1);
+	map->map = malloc(sizeof(char *) * (map->map_height + 1));
 	map->map[map->map_height] = NULL;
 	map_index = -1;
 	while (++map_index < map->map_height - 1)

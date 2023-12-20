@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaritas <msaritas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 15:42:54 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/16 10:44:18 by msaritas         ###   ########.fr       */
+/*   Updated: 2023/12/20 20:18:39 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	comma_count(char *tmp, int comma)
+{
+	int i;
+	int count;
+
+	count = 0;
+	i = -1;
+	while (tmp[++i])
+		if (tmp[i] == comma)
+			count++;
+	return (count);
+}
 
 void	check_maps_border(t_map *map)
 {
