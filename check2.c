@@ -6,7 +6,7 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 15:42:54 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/20 20:18:39 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:09:10 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	comma_count(char *tmp, int comma)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	count = 0;
 	i = -1;

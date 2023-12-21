@@ -6,7 +6,7 @@
 /*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:14:33 by maygen            #+#    #+#             */
-/*   Updated: 2023/12/16 11:54:57 by maygen           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:12:03 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	print_err(char *str, char *arg)
 	else
 		printf("%s \"%s\"", str, arg);
 	printf(" Error\n");
-	system("leaks cub3d");
 	exit(1);
 }
 
